@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import  {model, Schema } from "mongoose";
 const productSchema = new Schema({
   title: {
     type: String,
@@ -52,4 +52,4 @@ productSchema.set("toJSON", {
   },
 });
 
-export const Product = mongoose.model("Product", productSchema);
+export const Product = model("Product", productSchema);

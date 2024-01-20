@@ -1,4 +1,4 @@
-import mongoose, { Schema, SchemaType } from "mongoose";
+import  { Schema, SchemaType, model } from "mongoose";
 
 const userSchema = new Schema({
   name: {
@@ -26,8 +26,8 @@ const userSchema = new Schema({
   }
 });
 
-const virtual = userSchema.virtual("id");
-virtual.get(function () {
+const virtuals = userSchema.virtual("id");
+virtuals.get(function () {
   return this._id;
 });
 
@@ -39,4 +39,4 @@ userSchema.set("toJSON", {
   },
 });
 
-export const User = mongoose.model("User",userSchema) 
+export const User = model("User",userSchema) 

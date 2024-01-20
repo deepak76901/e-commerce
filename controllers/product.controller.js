@@ -51,11 +51,42 @@ export const fetchAllProducts = async (req, res) => {
   try {
     const docs = await query.exec();
     res.set("X-Total-Count", totalDocs);
-    res.status(200).json(docs);
+    res
+      .status(200)
+      .json({
+        title: docs.title,
+        description: docs.description,
+        price: docs.price,
+        discountPercentage: docs.discountPercentage,
+        rating: docs.rating,
+        stock: docs.stock,
+        brand: docs.brand,
+        category: docs.category,
+        thumbnail: docs.thumbnail,
+        images: docs.images,
+      });
   } catch (error) {
     res.status(402).json(error);
   }
 };
+
+/*  "id": 1,
+      "title": "iPhone 9",
+      "description": "An apple mobile which is nothing like apple",
+      "price": 549,
+      "discountPercentage": 12.96,
+      "rating": 4.69,
+      "stock": 94,
+      "brand": "Apple",
+      "category": "smartphones",
+      "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
+      "images": [
+        "https://i.dummyjson.com/data/products/1/1.jpg",
+        "https://i.dummyjson.com/data/products/1/2.jpg",
+        "https://i.dummyjson.com/data/products/1/3.jpg",
+        "https://i.dummyjson.com/data/products/1/4.jpg",
+        "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
+      ] */
 
 export const fetchProductById = async (req, res) => {
   const { id } = req.params;
@@ -67,13 +98,15 @@ export const fetchProductById = async (req, res) => {
   }
 };
 
-export const updateProduct = async (req,res) => {
-    const {id} = req.params;
+export const updateProduct = async (req, res) => {
+  const { id } = req.params;
 
-    try {
-      const product = await Product.findByIdAndUpdate(id,req.body,{new:true})
-      res.status(200).json(product)
-    } catch (error) {
-      res.status(412).json(error);
-    }
-}
+  try {
+    const product = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(412).json(error);
+  }
+};

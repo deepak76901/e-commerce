@@ -1,4 +1,4 @@
-import mongoose,{Schema} from "mongoose"
+import {Schema, model} from "mongoose"
 
 const categorySchema = new Schema({
     value : {
@@ -24,4 +24,4 @@ categorySchema.set("toJSON", {
   },
 });
 
-export const Category = mongoose.model("Category",categorySchema)
+export const Category = model("Category",categorySchema)

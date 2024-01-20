@@ -7,6 +7,8 @@ import { router as categoryRouter } from "./routes/category.router.js";
 import { router as brandRouter } from "./routes/brand.router.js";
 import { router as userRouter } from "./routes/user.router.js";
 import { router as authRouter } from "./routes/auth.router.js";
+import { router as cartRouter } from "./routes/cart.router.js";
+import morgan from "morgan";
 
 dotenv.config({
   path: "./.env",
@@ -17,6 +19,7 @@ const server = express();
 // Middlewares
 server.use(express.json());
 server.use(cors());
+server.use(morgan("dev"))
 
 server.get("/", (req, res) => {
   res.json({
@@ -29,6 +32,7 @@ server.use("/categories", categoryRouter);
 server.use("/brands", brandRouter);
 server.use("/auth", authRouter);
 server.use("/users", userRouter);
+server.use("/cart", cartRouter);
 
 connectDB();
 
