@@ -15,14 +15,14 @@ export const logInUser = async (req, res) => {
     const user = await User.findOne(
       { email: req.body.email }
     ).exec();
-    console.log({user})
+    // console.log({user})
 
     if (!user) {
       res.status(400).json({ message: "no such user exist" });
     } else if (user.password === req.body.password) {
       res.status(200).json({id:user.id,email:user.email,name:user.name, addresses:user.addresses});
     } else {
-      res.status(400).json({ message: "invalid credentials" });
+      res.status(400).json({ message: "invalid credential" });
     }
   } catch (error) {
     res.status(400).json(error);

@@ -20,53 +20,39 @@ export const fetchAllProducts = async (req, res) => {
   let query = Product.find({});
   let totalProductsQuery = Product.find({});
 
+  console.log(req.query.category);
+
   if (req.query.category) {
-    query = query.find({ category: req.query.category });
+    query = query.find({ category: { $in: req.query.category.split(",") } });
     totalProductsQuery = totalProductsQuery.find({
-      category: req.query.category,
+      category: { $in: req.query.category.split(",") },
     });
   }
   if (req.query.brand) {
-    query = query.find({ brand: req.query.brand });
-    totalProductsQuery = totalProductsQuery.find({ brand: req.query.brand });
+    query = query.find({ brand: { $in: req.query.brand.split(",") } });
+    totalProductsQuery = totalProductsQuery.find({
+      brand: { $in: req.query.brand.split(",") },
+    });
   }
   if (req.query._sort && req.query._order) {
     query = query.sort({ [req.query._sort]: req.query._order });
-    totalProductsQuery = totalProductsQuery.sort({
-      [req.query._sort]: req.query._order,
-    });
-  }
-  if (req.query._page && req.query._limit) {
-    const pageSize = req.query._limit;
-    const page = req.query.page;
-    query = query.skip(pageSize * (page - 1)).limit(pageSize);
-    totalProductsQuery = totalProductsQuery
-      .skip(pageSize * (page - 1))
-      .limit(pageSize);
   }
 
   const totalDocs = await totalProductsQuery.count().exec();
   console.log({ totalDocs });
 
+  if (req.query._page && req.query._limit) {
+    const pageSize = req.query._limit;
+    const page = req.query._page;
+    query = query.skip(pageSize * (page - 1)).limit(pageSize);
+  }
+
   try {
     const docs = await query.exec();
     res.set("X-Total-Count", totalDocs);
-    res
-      .status(200)
-      .json({
-        title: docs.title,
-        description: docs.description,
-        price: docs.price,
-        discountPercentage: docs.discountPercentage,
-        rating: docs.rating,
-        stock: docs.stock,
-        brand: docs.brand,
-        category: docs.category,
-        thumbnail: docs.thumbnail,
-        images: docs.images,
-      });
-  } catch (error) {
-    res.status(402).json(error);
+    res.status(200).json(docs);
+  } catch (err) {
+    res.status(400).json(err);
   }
 };
 

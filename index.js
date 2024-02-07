@@ -18,7 +18,9 @@ const server = express();
 
 // Middlewares
 server.use(express.json());
-server.use(cors());
+server.use(cors({
+  exposedHeaders:["X-Total-Count"]
+}));
 server.use(morgan("dev"))
 
 server.get("/", (req, res) => {
