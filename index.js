@@ -18,23 +18,12 @@ const server = express();
 
 // Middlewares
 server.use(express.json());
-server.use(cors({
-  exposedHeaders:["X-Total-Count"]
-}));
-server.use(morgan("dev"))
-
-server.get("/", (req, res) => {
-  res.json({
-    status: "Server Started Succefully",
-  });
-});
-
-server.use("/products", productRouter);
-server.use("/categories", categoryRouter);
-server.use("/brands", brandRouter);
-server.use("/auth", authRouter);
-server.use("/users", userRouter);
-server.use("/cart", cartRouter);
+server.use(
+  cors({
+    exposedHeaders: ["X-Total-Count"],
+  })
+);
+server.use(morgan("dev"));
 
 connectDB();
 
@@ -46,3 +35,16 @@ server.listen(
       ` : http://localhost:${process.env.PORT}`
   )
 );
+
+server.get("/", (req, res) => {
+  res.json({
+    status: "Server Started Successfully",
+  });
+});
+
+server.use("/products", productRouter);
+server.use("/categories", categoryRouter);
+server.use("/brands", brandRouter);
+server.use("/auth", authRouter);
+server.use("/users", userRouter);
+server.use("/cart", cartRouter);
