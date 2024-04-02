@@ -1,34 +1,61 @@
 import { User } from "../models/User.model.js";
+import { errorHandler } from "../utils/errorHandler.js";
+import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-export const createUser = async (req, res) => {
-  const { email, name, password } = req.body;
-  const user = new User({ email, name, password });
+export const createUser = async (req, res, next) => {
+  const { email, username, password } = req.body;
+
+  if (
+    !email ||
+    !username ||
+    !password ||
+    email === "" ||
+    username === "" ||
+    password === ""
+  ) {
+    next(errorHandler(400, "All fields are required"));
+  }
+  const hashedPassword = bcryptjs.hashSync(password, 10);
+
+  const newUser = new User({ email, username, password: hashedPassword });
   try {
-    const data = await user.save();
-    res.status(200).json({ name: data.name, email: data.email });
+    const data = await newUser.save();
+    res.status(200).json({
+      success: "Signup Successfully",
+      data: { username: data.username, email: data.email },
+    });
   } catch (error) {
-    res.status(400).json({ success: "Failed from Backend", message: error });
+    next(error);
   }
 };
 
-export const logInUser = async (req, res) => {
+export const logInUser = async (req, res, next) => {
+  const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email: req.body.email }).exec();
-    // console.log({user})
-
-    if (!user) {
-      res.status(400).json({ message: "no such user exist" });
-    } else if (user.password === req.body.password) {
-      res.status(200).json({
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        addresses: user.addresses,
-      });
-    } else {
-      res.status(400).json({ message: "invalid credential" });
+    const validUser = await User.findOne({ email });
+    // console.log(ValidUser);
+    if (!validUser) {
+      return next(errorHandler(400, "No such user exists"));
     }
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    if (!validPassword) {
+      return next(errorHandler(400, "Entered Password is wrong"));
+    }
+
+    const token = jwt.sign(
+      { id: validUser._id, isAdmin: validUser.isAdmin },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "24h" }
+    );
+    // console.log("Here is Monggose power ",validUser._doc);
+    const { password: pass, ...rest } = validUser._doc;
+
+    res
+      .status(200)
+      .cookie("access_token", token, { httpOnly: true })
+      .json(rest);
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 };

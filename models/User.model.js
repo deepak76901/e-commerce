@@ -1,8 +1,10 @@
-import  { Schema, SchemaType, model } from "mongoose";
+import { Schema, SchemaType, model } from "mongoose";
 
 const userSchema = new Schema({
-  name: {
+  username: {
     type: String,
+    required: true,
+    unique: true,
   },
   email: {
     type: String,
@@ -13,17 +15,16 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  role: {
-    type: String,
-    required: true,
-    default:"user"
+  isAdmin: {
+    type: Boolean,
+    default: false,
   },
   addresses: {
     type: [SchemaType.Mixed],
   },
-  orders:{
-    type:[SchemaType.Mixed]
-  }
+  orders: {
+    type: [SchemaType.Mixed],
+  },
 });
 
 const virtuals = userSchema.virtual("id");
@@ -39,4 +40,4 @@ userSchema.set("toJSON", {
   },
 });
 
-export const User = model("User",userSchema) 
+export const User = model("User", userSchema);

@@ -14,37 +14,39 @@ dotenv.config({
   path: "./.env",
 });
 
-const server = express();
+const app = express();
 
 // Middlewares
-server.use(express.json());
-server.use(
+app.use(express.json());
+app.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
   })
 );
-server.use(morgan("dev"));
+app.use(morgan("dev"));
 
 connectDB();
 
-server.listen(
+app.listen(
   process.env.PORT,
-  console.log(
-    "Server is listening on PORT : " +
-      process.env.PORT +
-      ` : http://localhost:${process.env.PORT}`
-  )
+  console.log("Server is listening on PORT : " + process.env.PORT)
 );
 
-server.get("/", (req, res) => {
+app.get("/", (req, res) => {
   res.json({
-    status: "Server Started Successfully",
+    status: "app Started Successfully",
   });
 });
 
-server.use("/products", productRouter);
-server.use("/categories", categoryRouter);
-server.use("/brands", brandRouter);
-server.use("/auth", authRouter);
-server.use("/users", userRouter);
-server.use("/cart", cartRouter);
+app.use("/products", productRouter);
+app.use("/categories", categoryRouter);
+app.use("/brands", brandRouter);
+app.use("/auth", authRouter);
+app.use("/users", userRouter);
+app.use("/cart", cartRouter);
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(statusCode).json({ success: false, message });
+});
