@@ -45,7 +45,7 @@ export default function ProductDetails() {
         quantity: 1,
         // user:user.id,
       };
-      dispatch(addToCartAsync({ item: newItem, alert }));
+      dispatch(addToCartAsync({ item: newItem, }));
     } else {
       alert.error("Item Already added");
     }

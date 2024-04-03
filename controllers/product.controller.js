@@ -1,6 +1,6 @@
 import { Product } from "../models/Product.model.js";
 
-export const createProduct = async (req, res) => {
+export const createProduct = async (req, res, next) => {
   // we get product details from API
   const product = new Product(req.body);
 
@@ -8,11 +8,11 @@ export const createProduct = async (req, res) => {
     const doc = await product.save();
     res.status(201).json(doc);
   } catch (error) {
-    res.status(401).json(error);
+    next(error);
   }
 };
 
-export const fetchAllProducts = async (req, res) => {
+export const fetchAllProducts = async (req, res, next) => {
   // filter = {"category" : {"smartphone","laptop"}}
   // sort = {_sort:"price",_order:"desc"}
   // pagination = {_page=1,_limit=10}
@@ -52,7 +52,7 @@ export const fetchAllProducts = async (req, res) => {
     res.set("X-Total-Count", totalDocs);
     res.status(200).json(docs);
   } catch (err) {
-    res.status(400).json(err);
+    next(error);
   }
 };
 
@@ -74,17 +74,17 @@ export const fetchAllProducts = async (req, res) => {
         "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
       ] */
 
-export const fetchProductById = async (req, res) => {
+export const fetchProductById = async (req, res, next) => {
   const { id } = req.params;
   try {
     const product = await Product.findById(id);
     res.status(200).json(product);
   } catch (error) {
-    res.status(412).json(error);
+    next(error);
   }
 };
 
-export const updateProduct = async (req, res) => {
+export const updateProduct = async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -93,6 +93,6 @@ export const updateProduct = async (req, res) => {
     });
     res.status(200).json(product);
   } catch (error) {
-    res.status(412).json(error);
+    next(error);
   }
 };

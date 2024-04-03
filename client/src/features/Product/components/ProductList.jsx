@@ -176,7 +176,7 @@ export default function ProductList() {
           ></MobileFilter>
 
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+            <div className="flex items-baseline justify-between border-b border-gray-200 py-5">
               <h1 className="text-4xl font-bold tracking-tight text-gray-800">
                 All Products
               </h1>
@@ -246,7 +246,7 @@ export default function ProductList() {
               </div>
             </div>
 
-            <section aria-labelledby="products-heading" className="pb-24 pt-6">
+            <section aria-labelledby="products-heading" className="pb-10 pt-5">
               <h2 id="products-heading" className="sr-only">
                 Products
               </h2>
@@ -404,7 +404,7 @@ function DesktopFilter({ handleFilter, filters }) {
           <Disclosure
             as="div"
             key={section.id}
-            className="border-b border-gray-200 py-6"
+            className="border-b border-gray-200 py-5"
           >
             {({ open }) => (
               <>
@@ -458,7 +458,7 @@ function ProductGrid({ products }) {
   return (
     <>
       <div className="bg-white">
-        <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
+        <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-gray-800">
             Customers also purchased
           </h2>
@@ -468,7 +468,7 @@ function ProductGrid({ products }) {
               <Link to={`/product-detail/${product.id}`} >
                 <div
                   key={product.id}
-                  className="group relative border-solid border-2 rounded-md border-gray-500 p-2"
+                  className="group relative border-solid border-2 rounded-lg border-gray-500 p-2"
                 >
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
                     <img

@@ -49,8 +49,8 @@ function Navbar({ children }) {
                   <div className="flex flex-shrink-0 items-center">
                     <Link to="/">
                       <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        className="h-10 w-auto rounded-full"
+                        src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-correct-icon-png-image_4602219.jpg"
                         alt="Your Company"
                       />
                     </Link>

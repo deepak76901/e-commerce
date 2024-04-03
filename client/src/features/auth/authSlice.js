@@ -19,13 +19,13 @@ export const createUserAsync = createAsyncThunk(
 
 export const checkUserAsync = createAsyncThunk(
   "user/checkUser",
-  async (logInInfo , {rejectWithValue}) => {
+  async (logInInfo, { rejectWithValue }) => {
     try {
       const response = await checkUser(logInInfo);
       return response.data;
     } catch (error) {
-      console.log(error)
-      return rejectWithValue(error)
+      console.log(error);
+      return rejectWithValue(error);
     }
   }
 );

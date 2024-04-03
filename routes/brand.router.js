@@ -1,6 +1,6 @@
-import { Router } from "express"
-import { createBrand, fetchBrand } from "../controllers/brands.controller.js"
+import { Router } from "express";
+import { createBrand, fetchBrand } from "../controllers/brands.controller.js";
 
-export const router = Router()
+export const router = Router();
 
-router.get("/",fetchBrand).post("/",createBrand)
+router.get("/", fetchBrand).post("/", createBrand);

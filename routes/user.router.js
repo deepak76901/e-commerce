@@ -3,4 +3,6 @@ import { fetchUserById, updateUser } from "../controllers/user.controller.js";
 
 export const router = Router();
 
-router.get("/:id", fetchUserById).patch("/:id", updateUser);
+router
+  .get("/fetchuser/:id", fetchUserById)
+  .patch("/updateuser/:id", updateUser);

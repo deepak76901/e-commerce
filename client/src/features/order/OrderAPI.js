@@ -12,7 +12,7 @@ export function createOrder(order) {
 
 export function updateOrder(order) {
   return new Promise(async (resolve) => {
-    const response = await fetch("/orders/"+order.id, {
+    const response = await fetch("/orders/" + order.id, {
       method: "PATCH",
       body: JSON.stringify(order),
       headers: { "Content-type": "application/json" },
@@ -22,9 +22,8 @@ export function updateOrder(order) {
   });
 }
 
-
-export function fetchAllOrders(sort,pagination) {
-  let queryString = ""
+export function fetchAllOrders(sort, pagination) {
+  let queryString = "";
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
   }
@@ -33,9 +32,7 @@ export function fetchAllOrders(sort,pagination) {
   }
 
   return new Promise(async (resolve) => {
-    const response = await fetch(
-      "/orders?" + queryString
-    );
+    const response = await fetch("/orders?" + queryString);
     const data = await response.json();
     const totalOrders = await response.headers.get("X-Total-Count");
     resolve({

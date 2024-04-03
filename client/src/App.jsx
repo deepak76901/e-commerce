@@ -28,15 +28,11 @@ import AdminOrdersPage from "./pages/AdminOrdersPage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-        <Home />
-    ),
+    element: <Home />,
   },
   {
     path: "/admin",
-    element: (
-        <AdminHome />
-    ),
+    element: <AdminHome />,
   },
   {
     path: "login",
@@ -57,38 +53,34 @@ const router = createBrowserRouter([
   {
     path: "cart",
     element: (
+      <Protected>
         <CartPage />
+      </Protected>
     ),
   },
   {
     path: "checkout",
     element: (
+      <Protected>
         <Checkout />
+      </Protected>
     ),
   },
   {
     path: "/product-detail/:id",
-    element: (
-        <ProductDetailsPage />
-    ),
+    element: <ProductDetailsPage />,
   },
   {
     path: "/admin/product-detail/:id",
-    element: (
-        <AdminProductDetailsPage />
-    ),
+    element: <AdminProductDetailsPage />,
   },
   {
     path: "/admin/product-form",
-    element: (
-        <AddProductPage />
-    ),
+    element: <AddProductPage />,
   },
   {
     path: "/admin/product-form/edit/:id",
-    element: (
-        <AddProductPage />
-    ),
+    element: <AddProductPage />,
   },
   {
     path: "*",
@@ -96,21 +88,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/order-success/:id",
-    element: <OrderSuccessPage></OrderSuccessPage>,
+    element: <OrderSuccessPage />,
   },
   {
     path: "/orders",
-    element: <UserOrderPage></UserOrderPage>,
-  },
-  {
-    path: "/admin/orders",
     element: (
-        <AdminOrdersPage></AdminOrdersPage>
+      <Protected>
+        <UserOrderPage />
+      </Protected>
     ),
   },
   {
+    path: "/admin/orders",
+    element: <AdminOrdersPage />,
+  },
+  {
     path: "/profile",
-    element: <UserProfilePage></UserProfilePage>,
+    element: (
+      <Protected>
+        <UserProfilePage />
+      </Protected>
+    ),
   },
 ]);
 
@@ -120,10 +118,10 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      dispatch(fetchItemsByUserIdAsync(user.id));
-      dispatch(fetchLoggedInUserAsync(user.id));
+      dispatch(fetchItemsByUserIdAsync(user._id));
+      dispatch(fetchLoggedInUserAsync(user._id));
     }
-  }, [user, dispatch]);
+  }, [user]);
 
   return (
     <>

@@ -1,15 +1,15 @@
-import {Schema, model} from "mongoose"
+import { Schema, model } from "mongoose";
 
 const categorySchema = new Schema({
-    value : {
-        type :String,
-        required : true
-    },
-    label : {
-        type :String,
-        required : true
-    },
-})
+  value: {
+    type: String,
+    required: true,
+  },
+  label: {
+    type: String,
+    required: true,
+  },
+});
 
 const virtuals = categorySchema.virtual("id");
 virtuals.get(function () {
@@ -24,4 +24,4 @@ categorySchema.set("toJSON", {
   },
 });
 
-export const Category = model("Category",categorySchema)
+export const Category = model("Category", categorySchema);

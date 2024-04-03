@@ -16,7 +16,7 @@ export function checkUser(logInInfo) {
     try {
       const email = logInInfo.email;
       const password = logInInfo.password;
-      const response = await fetch("/auth/login", {
+      const response = await fetch("/auth/signin", {
         method: "POST",
         body: JSON.stringify(logInInfo),
         headers: { "content-type": "application/json" },

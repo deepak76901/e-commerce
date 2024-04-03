@@ -42,7 +42,7 @@ app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 app.use("/brands", brandRouter);
 app.use("/auth", authRouter);
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 app.use("/cart", cartRouter);
 
 app.use((err, req, res, next) => {

@@ -1,6 +1,6 @@
 import { User } from "../models/User.model.js";
 
-export const fetchUserById = async (req, res) => {
+export const fetchUserById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -14,11 +14,11 @@ export const fetchUserById = async (req, res) => {
       orders: user.orders,
     });
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 };
 
-export const updateUser = async (req, res) => {
+export const updateUser = async (req, res, next) => {
   const { id } = req.params;
   try {
     const user = await User.findByIdAndUpdate(id, req.body, {
@@ -26,6 +26,6 @@ export const updateUser = async (req, res) => {
     }).exec();
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 };

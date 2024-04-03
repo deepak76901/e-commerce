@@ -22,32 +22,32 @@ function Signup() {
     <>
       {user?.email}
       {user && <Navigate to="/" replace={true}></Navigate>}
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            className="mx-auto h-12 w-auto"
+            src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-correct-icon-png-image_4602219.jpg"
             alt="Your Company"
           />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create an Account
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             noValidate
-            className="space-y-6"
+            className="space-y-4"
             onSubmit={handleSubmit((data) => {
               console.log(data);
               dispatch(
                 createUserAsync({
-                  name: data.name,
+                  username: data.username,
                   email: data.email,
                   password: data.password,
                   addresses: [],
-                  role: "user",
-                  /* TODO: this role will be later set by backend*/
+                  
+                  
                 })
               );
             })}
@@ -61,10 +61,9 @@ function Signup() {
               </label>
               <div className="mt-2">
                 <input
-                  id="name"
-                  {...register("name", {
-                    required: "name is required",
-                    
+                  id="username"
+                  {...register("username", {
+                    required: "username is required",
                   })}
                   type="string"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
