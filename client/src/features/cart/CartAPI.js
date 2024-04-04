@@ -2,8 +2,8 @@ export function addToCart(item) {
   return new Promise(async (resolve) => {
     const response = await fetch("/cart/addToCart", {
       method: "POST",
-      body: JSON.stringify(item),
       headers: { "Content-type": "application/json" },
+      body: JSON.stringify(item),
     });
     // TODO: on server it will only return relevant insformation of user
     const data = await response.json();
@@ -34,7 +34,7 @@ export function updateCart(update) {
 
 export function deleteItemFromCart(itemId) {
   return new Promise(async (resolve) => {
-    const response = await fetch("/cart/" + itemId, {
+    const response = await fetch("/cart/deleteItem/" + itemId, {
       method: "DELETE",
       headers: { "Content-type": "application/json" },
     });

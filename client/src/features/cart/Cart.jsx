@@ -3,9 +3,13 @@ import { Fragment, useState } from "react";
 // import { Dialog, Transition } from "@headlessui/react";
 // import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { selectItems, updateCartAsync, deleteItemFromCartAsync } from "./CartSlice";
+import {
+  selectItems,
+  updateCartAsync,
+  deleteItemFromCartAsync,
+} from "./CartSlice";
 import { useSelector, useDispatch } from "react-redux";
-import {Navigate} from "react-router-dom"
+import { Navigate } from "react-router-dom";
 import { discountedPrice } from "../../app/constants";
 
 function Cart() {
@@ -19,12 +23,12 @@ function Cart() {
   const dispatch = useDispatch();
 
   const handleQuantity = (e, item) => {
-    dispatch(updateCartAsync({ id:item.id, quantity: +e.target.value }));
+    dispatch(updateCartAsync({ id: item.id, quantity: +e.target.value }));
   };
 
-  const handleRemove = (e,id) => {
-    dispatch(deleteItemFromCartAsync(id))
-  }
+  const handleRemove = (e, id) => {
+    dispatch(deleteItemFromCartAsync(id));
+  };
 
   return (
     <>
@@ -78,7 +82,7 @@ function Cart() {
 
                       <div className="flex">
                         <button
-                          onClick={e => handleRemove(e,item.id)}
+                          onClick={(e) => handleRemove(e, item.id)}
                           type="button"
                           className="font-medium text-indigo-600 hover:text-indigo-500"
                         >
@@ -112,20 +116,18 @@ function Cart() {
                 Checkout
               </Link>
             </div>
-            <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-              <p>
-                or
-                <Link to="/">
-                  <button
-                    type="button"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                    onClick={() => setOpen(false)}
-                  >
-                    Continue Shopping
-                    <span aria-hidden="true"> &rarr;</span>
-                  </button>
-                </Link>
-              </p>
+            <div className="mt-6 flex justify-center text-center text-sm text-gray-500 gap-2">
+              <p>or</p>
+              <Link to="/">
+                <button
+                  type="button"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                  onClick={() => setOpen(false)}
+                >
+                  Continue Shopping
+                  <span aria-hidden="true"> &rarr;</span>
+                </button>
+              </Link>
             </div>
           </div>
         </div>

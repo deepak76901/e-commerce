@@ -4,9 +4,11 @@ export const fetchCartByUser = async (req, res, next) => {
   const { user } = req.query;
 
   try {
-    const cartItems = await Cart.find({ user: user })
-      .populate("user")
-      .populate("product");
+    const cartItems = await Cart.find({ user: user }).populate([
+      "user",
+      "product",
+    ]);
+
     res.status(200).json(cartItems);
   } catch (error) {
     next(error);
@@ -14,10 +16,12 @@ export const fetchCartByUser = async (req, res, next) => {
 };
 
 export const addToCart = async (req, res, next) => {
-  const cart = new Cart(req.body);
+  const { quantity, product, user } = req.body;
+  const cart = new Cart({ quantity, product, user });
   try {
     const doc = await cart.save();
-    const result = await doc.populate("product");
+    const result = await doc.populate(["product", "user"]);
+    console.log(result); // Populate is working
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -46,4 +50,11 @@ export const updateCart = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const fetchCart = async (req, res, next) => {
+  const docs = await Cart.find({}).populate(["user", "product"]);
+  const totalDocs = await Cart.countDocuments();
+  res.json({ docs, totalDocs });
+  console.log(docs);
 };

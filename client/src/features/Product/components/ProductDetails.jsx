@@ -6,6 +6,8 @@ import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
 import { useParams } from "react-router-dom";
 import { addToCartAsync, selectItems } from "../../cart/CartSlice";
 import { discountedPrice } from "../../../app/constants";
+import { selectLoggedInUser } from "../../auth/authSlice";
+import { selectUserInfo } from "../../user/userSlice";
 
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -35,26 +37,35 @@ export default function ProductDetails() {
   const items = useSelector(selectItems);
   const dispatch = useDispatch();
   const params = useParams();
-
+  // Remember this destructuring process
+  const { _id } = useSelector(selectLoggedInUser);
   const handleCart = (e) => {
     e.preventDefault();
-    if (items.findIndex((item) => item.product.id === product.id) < 0) {
-      console.log({ items, product });
-      const newItem = {
-        product: product.id,
-        quantity: 1,
-        // user:user.id,
-      };
-      dispatch(addToCartAsync({ item: newItem, }));
+
+    if (items.length > 0) {
+      if (items.findIndex((item) => item.product.id === product.id) < 0) {
+        const newItem = {
+          quantity: 1,
+          user: _id,
+          product: product.id,
+        };
+        dispatch(addToCartAsync(newItem));
+      } else {
+        alert("Item Already Exist");
+      }
     } else {
-      alert.error("Item Already added");
+      const newItem = {
+        quantity: 1,
+        user: _id,
+        product: product.id,
+      };
+      dispatch(addToCartAsync(newItem));
     }
   };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
   }, [dispatch, params.id]);
-  // TODO : in server data we will add colors,size etc.
 
   return (
     <div className="bg-white">

@@ -28,7 +28,11 @@ import AdminOrdersPage from "./pages/AdminOrdersPage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <Protected>
+        <Home />
+      </Protected>
+    ),
   },
   {
     path: "/admin",
@@ -68,7 +72,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/product-detail/:id",
-    element: <ProductDetailsPage />,
+    element: (
+      <Protected>
+        <ProductDetailsPage />
+      </Protected>
+    ),
   },
   {
     path: "/admin/product-detail/:id",

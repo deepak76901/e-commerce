@@ -7,9 +7,9 @@ export const fetchUserById = async (req, res, next) => {
     const user = await User.findById(id);
     res.status(200).json({
       id: user.id,
-      name: user.name,
+      username: user.username,
       email: user.email,
-      role: user.role,
+      isAdmin: user.isAdmin,
       addresses: user.addresses,
       orders: user.orders,
     });

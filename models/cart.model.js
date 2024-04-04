@@ -2,8 +2,8 @@ import { Schema, model } from "mongoose";
 
 const cartSchema = new Schema({
   quantity: { type: Number, required: true, default: 0 },
-  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+  user: { type: Schema.Types.ObjectId, ref: "User" },
+  product: { type: Schema.Types.ObjectId, ref: "Product" },
 });
 
 const virtuals = cartSchema.virtual("id");
