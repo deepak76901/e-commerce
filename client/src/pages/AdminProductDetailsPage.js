@@ -5,7 +5,6 @@ import AdminProductDetails from "../features/admin/components/AdminProductDetail
 function AdminProductDetailsPage() {
   return (
     <div>
-      <Navbar />
       <AdminProductDetails />
     </div>
   );

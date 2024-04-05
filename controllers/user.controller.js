@@ -24,6 +24,7 @@ export const updateUser = async (req, res, next) => {
     const user = await User.findByIdAndUpdate(id, req.body, {
       new: true,
     }).exec();
+    console.log(user);
     res.status(200).json(user);
   } catch (error) {
     next(error);

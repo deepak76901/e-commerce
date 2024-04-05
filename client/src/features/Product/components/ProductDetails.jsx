@@ -76,11 +76,11 @@ export default function ProductDetails() {
               role="list"
               className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
             >
-              <li className="text-sm">
+              <li className="text-xl">
                 <a
                   href={product.href}
                   aria-current="page"
-                  className="font-medium text-gray-500 hover:text-gray-600"
+                  className="font-medium text-gray-700"
                 >
                   {product.title}
                 </a>
@@ -135,6 +135,9 @@ export default function ProductDetails() {
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
                 ${discountedPrice(product)}
+              </p>
+              <p className="text-xl text-gray-500 line-through">
+                ${product.price}
               </p>
 
               {/* Reviews */}

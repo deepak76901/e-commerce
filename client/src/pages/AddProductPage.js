@@ -5,7 +5,6 @@ import ProductForm from '../features/admin/components/ProductForm'
 export default function AddProductPage() {
   return (
     <div>
-      <Navbar />
       <ProductForm />
     </div>
   )

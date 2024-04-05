@@ -9,9 +9,7 @@ import {
 } from "../features/cart/CartSlice";
 import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {
-  updateUserAsync,
-} from "../features/auth/authSlice";
+import { updateUserAsync } from "../features/user/userSlice";
 import {
   createOrderAsync,
   selectCurrentOrder,
@@ -24,10 +22,12 @@ function Checkout() {
   const {
     register,
     handleSubmit,
-    watch,
-    reset,
     formState: { errors },
   } = useForm();
+
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(true);
   const user = useSelector(selectUserInfo);
@@ -38,13 +38,9 @@ function Checkout() {
     (amount, item) => discountedPrice(item.product) * item.quantity + amount,
     0
   );
-  const dispatch = useDispatch();
-
-  const [selectedAddress, setSelectedAddress] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("cash");
 
   const handleQuantity = (e, item) => {
-    dispatch(updateCartAsync({ id:item.id , quantity: +e.target.value }));
+    dispatch(updateCartAsync({ id: item.id, quantity: +e.target.value }));
   };
 
   const handleRemove = (e, id) => {
@@ -52,7 +48,6 @@ function Checkout() {
   };
 
   const handleAddress = (e) => {
-    console.log(e.target.value);
     setSelectedAddress(user.addresses[e.target.value]);
   };
   const handlePayment = (e) => {
@@ -73,29 +68,30 @@ function Checkout() {
     dispatch(createOrderAsync(order));
   };
 
+  const handleForm = (data) => {
+    console.log(data);
+    dispatch(
+      updateUserAsync({
+        ...user,
+        addresses: [...user.addresses, data],
+      })
+    );
+  };
+
   return (
     <>
       {currentOrder && (
         <Navigate to={`/order-success/${currentOrder.id}`}></Navigate>
       )}
       {!items.length && <Navigate to="/"></Navigate>}
-      <Navbar />
+
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5   ">
           <div className="lg:col-span-3 ">
             <form
               className="bg-white p-5"
               noValidate
-              onSubmit={handleSubmit((data) => {
-                console.log(data);
-                dispatch(
-                  // checkUserAsync({ email: data.email, password: data.password })
-                  updateUserAsync({
-                    ...user,
-                    addresses: [...user.addresses, data],
-                  })
-                );
-              })}
+              onSubmit={handleSubmit(handleForm)}
             >
               <div className="space-y-12">
                 <div>
@@ -276,12 +272,12 @@ function Checkout() {
                               name="address"
                               type="radio"
                               value={index}
-                              className="h-4 w-4 mx-5 border-gray-400 text-indigo-600 focus:ring-indigo-600  "
+                              className="h-4 w-4 mx-5 border-gray-400 text-indigo-600 focus:ring-indigo-600"
                             />
                             <img
                               className="h-12 w-12 flex-none rounded-full bg-gray-50"
-                              src={address.img}
-                              alt=""
+                              src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
+                              alt="DP"
                             />
                             <div className="min-w-0 flex-auto">
                               <p className="text-sm font-semibold leading-6 text-gray-900">
@@ -391,9 +387,13 @@ function Checkout() {
                         <div>
                           <div className="flex justify-between text-base font-medium text-gray-900">
                             <h3>
-                              <a href={item.product.href}>{item.product.title}</a>
+                              <a href={item.product.href}>
+                                {item.product.title}
+                              </a>
                             </h3>
-                            <p className="ml-4">${discountedPrice(item.product)}</p>
+                            <p className="ml-4">
+                              ${discountedPrice(item.product)}
+                            </p>
                           </div>
                           <p className="mt-1 text-sm text-gray-500">
                             {item.product.brand}
@@ -454,20 +454,18 @@ function Checkout() {
                     Order Now
                   </button>
                 </div>
-                <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                  <p>
-                    or
-                    <Link to="/">
-                      <button
-                        type="button"
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                        onClick={() => setOpen(false)}
-                      >
-                        Continue Shopping
-                        <span aria-hidden="true"> &rarr;</span>
-                      </button>
-                    </Link>
-                  </p>
+                <div className="mt-6 flex gap-2 justify-center text-center text-sm text-gray-500">
+                  <p>or</p>
+                  <Link to="/">
+                    <button
+                      type="button"
+                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                      onClick={() => setOpen(false)}
+                    >
+                      Continue Shopping
+                      <span aria-hidden="true"> &rarr;</span>
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

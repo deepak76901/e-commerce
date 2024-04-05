@@ -16,7 +16,7 @@ export function fetchLoggedInUser(userId) {
 
 export function updateUser(update) {
   return new Promise(async (resolve) => {
-    const response = await fetch("/users/updateuser/" + update.id, {
+    const response = await fetch("/user/updateuser/" + update.id, {
       method: "PATCH",
       body: JSON.stringify(update),
       headers: { "Content-type": "application/json" },
