@@ -41,13 +41,13 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
         <ScrollToTop />
         <Routes>
           <Route
             path="/"
             element={
               <Protected>
+                <Navbar />
                 <Home />
               </Protected>
             }
@@ -56,11 +56,20 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/logout" element={<LogOut />} />
           <Route path="/fp" element={<ForgotPasswordPage />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route
+            path="*"
+            element={
+              <>
+                <Navbar />
+                <PageNotFound />
+              </>
+            }
+          />
           <Route
             path="/cart"
             element={
               <Protected>
+                <Navbar />
                 <CartPage />
               </Protected>
             }
@@ -69,6 +78,7 @@ function App() {
             path="/checkout"
             element={
               <Protected>
+                <Navbar />
                 <Checkout />
               </Protected>
             }
@@ -77,6 +87,7 @@ function App() {
             path="/product-detail/:id"
             element={
               <Protected>
+                <Navbar />
                 <ProductDetailsPage />
               </Protected>
             }
@@ -85,6 +96,7 @@ function App() {
             path="/profile"
             element={
               <Protected>
+                <Navbar />
                 <UserProfilePage />
               </Protected>
             }
@@ -93,22 +105,57 @@ function App() {
             path="/orders"
             element={
               <Protected>
+                <Navbar />
                 <UserOrderPage />
               </Protected>
             }
           />
-          <Route path="/order-success/:id" element={<OrderSuccessPage />} />
+          <Route
+            path="/order-success/:id"
+            element={
+              <>
+                <Navbar />
+                <OrderSuccessPage />
+              </>
+            }
+          />
           <Route
             path="/admin/product-detail/:id"
-            element={<AdminProductDetailsPage />}
+            element={
+              <>
+                <Navbar />
+                <AdminProductDetailsPage />
+              </>
+            }
           />
-          <Route path="/admin/product-form" element={<AddProductPage />} />
+          <Route
+            path="/admin/product-form"
+            element={
+              <>
+                <Navbar />
+                <AddProductPage />
+              </>
+            }
+          />
           <Route
             path="/admin/product-form/edit/:id"
-            element={<AddProductPage />}
+            element={
+              <>
+                <Navbar />
+                <AddProductPage />
+              </>
+            }
           />
 
-          <Route path="/admin/orders" element={<AdminOrdersPage />} />
+          <Route
+            path="/admin/orders"
+            element={
+              <>
+                <Navbar />
+                <AdminOrdersPage />
+              </>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
