@@ -9,7 +9,7 @@ import {
 export const router = Router();
 
 router
+  .get("/getAllProducts", fetchAllProducts)
   .post("/", createProduct)
-  .get("/", fetchAllProducts)
   .get("/:id", fetchProductById)
   .patch("/:id", updateProduct);

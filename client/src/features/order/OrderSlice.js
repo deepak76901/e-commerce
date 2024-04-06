@@ -13,7 +13,7 @@ export const createOrderAsync = createAsyncThunk(
   async (order) => {
     const response = await createOrder(order);
     // The value we return becomes the `fulfilled` action payload
-    return response.data;
+    return response;
   }
 );
 
@@ -22,7 +22,7 @@ export const updateOrderAsync = createAsyncThunk(
   async (order) => {
     const response = await updateOrder(order);
     // The value we return becomes the `fulfilled` action payload
-    return response.data;
+    return response;
   }
 );
 
@@ -31,7 +31,7 @@ export const fetchAllOrdersAsync = createAsyncThunk(
   async ({ sort, pagination }) => {
     const response = await fetchAllOrders(sort, pagination);
     // The value we return becomes the `fulfilled` action payload
-    return response.data;
+    return response;
   }
 );
 

@@ -1,44 +1,39 @@
-export function createUser(userData) {
-  return new Promise(async (resolve) => {
+export const createUser = async (userData) => {
+  try {
     const response = await fetch("/auth/signup", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-type": "application/json" },
     });
-    // TODO: on server it will only return relevant insformation of user
     const data = await response.json();
-    resolve({ data });
-  });
-}
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
-export function checkUser(logInInfo) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const email = logInInfo.email;
-      const password = logInInfo.password;
-      const response = await fetch("/auth/signin", {
-        method: "POST",
-        body: JSON.stringify(logInInfo),
-        headers: { "content-type": "application/json" },
-      });
+export const checkUser = async (logInInfo) => {
+  try {
+    const email = logInInfo.email;
+    const password = logInInfo.password;
+    const response = await fetch("/auth/signin", {
+      method: "POST",
+      body: JSON.stringify(logInInfo),
+      headers: { "content-type": "application/json" },
+    });
 
-      if(response.ok){
-        const data = await response.json();
-        resolve({ data });
-      }else{
-        const err = await response.json()
-        reject(err)
-      }
-     
-    } catch (error) {
-      reject(error );
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      const err = await response.json();
+      console.log(err);
     }
-  });
-}
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
-export function logOut(userId) {
-  return new Promise(async (resolve) => {
-    // TODO: on server we will remove user session info
-    resolve({ data: "success" });
-  });
-}
+export const logOut = async (userId) => {
+  return { data: "success" };
+};

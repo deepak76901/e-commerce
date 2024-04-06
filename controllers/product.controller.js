@@ -52,7 +52,7 @@ export const fetchAllProducts = async (req, res, next) => {
     res.set("X-Total-Count", totalDocs);
     res.status(200).json(docs);
   } catch (err) {
-    next(error);
+    next(err);
   }
 };
 

@@ -13,7 +13,7 @@ export const createUserAsync = createAsyncThunk(
   async (userData) => {
     const response = await createUser(userData);
     // The value we return becomes the `fulfilled` action payload
-    return response.data;
+    return response;
   }
 );
 
@@ -22,7 +22,7 @@ export const checkUserAsync = createAsyncThunk(
   async (logInInfo, { rejectWithValue }) => {
     try {
       const response = await checkUser(logInInfo);
-      return response.data;
+      return response;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error);
@@ -35,7 +35,7 @@ export const logOutAsync = createAsyncThunk(
   async (logInInfo) => {
     const response = await logOut(logInInfo);
     // The value we return becomes the `fulfilled` action payload
-    return response.data;
+    return response;
   }
 );
 
@@ -44,7 +44,7 @@ export const updateUserAsync = createAsyncThunk(
   async (update) => {
     const response = await updateUser(update);
     // The value we return becomes the `fulfilled` action payload
-    return response.data;
+    return response;
   }
 );
 

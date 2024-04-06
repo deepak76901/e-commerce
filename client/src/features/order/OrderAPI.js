@@ -1,28 +1,24 @@
-export function createOrder(order) {
-  return new Promise(async (resolve) => {
-    const response = await fetch("/orders", {
-      method: "POST",
-      body: JSON.stringify(order),
-      headers: { "Content-type": "application/json" },
-    });
-    const data = await response.json();
-    resolve({ data });
+export const createOrder = async (order) => {
+  const response = await fetch("/orders", {
+    method: "POST",
+    body: JSON.stringify(order),
+    headers: { "Content-type": "application/json" },
   });
-}
+  const data = await response.json();
+  return data;
+};
 
-export function updateOrder(order) {
-  return new Promise(async (resolve) => {
-    const response = await fetch("/orders/" + order.id, {
-      method: "PATCH",
-      body: JSON.stringify(order),
-      headers: { "Content-type": "application/json" },
-    });
-    const data = await response.json();
-    resolve({ data });
+export const updateOrder = async (order) => {
+  const response = await fetch("/orders/" + order.id, {
+    method: "PATCH",
+    body: JSON.stringify(order),
+    headers: { "Content-type": "application/json" },
   });
-}
+  const data = await response.json();
+  return data;
+};
 
-export function fetchAllOrders(sort, pagination) {
+export const fetchAllOrders = async (sort, pagination) => {
   let queryString = "";
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
@@ -30,16 +26,8 @@ export function fetchAllOrders(sort, pagination) {
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
-
-  return new Promise(async (resolve) => {
-    const response = await fetch("/orders?" + queryString);
-    const data = await response.json();
-    const totalOrders = await response.headers.get("X-Total-Count");
-    resolve({
-      data: {
-        orders: data,
-        totalOrders: +totalOrders,
-      },
-    });
-  });
-}
+  const response = await fetch("/orders?" + queryString);
+  const data = await response.json();
+  const totalOrders = await response.headers.get("X-Total-Count");
+  return { orders: data, totalOrders: +totalOrders };
+};

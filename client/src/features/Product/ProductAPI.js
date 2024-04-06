@@ -1,33 +1,26 @@
-// A mock function to mimic making an async request for data
-export function fetchAllProducts() {
-  return new Promise(async (resolve) => {
-    const response = await fetch("/products");
-    const data = await response.json();
-    resolve({ data });
-  });
-}
+export const fetchAllProducts = async () => {
+  const response = await fetch("/products/getAllProducts");
+  const data = await response.json();
+  return data;
+};
 
-export function fetchProductById(id) {
-  return new Promise(async (resolve) => {
-    const response = await fetch("/products/" + id);
-    const data = await response.json();
-    resolve({ data });
-  });
-}
+export const fetchProductById = async (id) => {
+  const response = await fetch("/products/" + id);
+  const data = await response.json();
+  return data;
+};
 
-export function createProduct(product) {
-  return new Promise(async (resolve) => {
-    const response = await fetch("/products/", {
-      method: "POST",
-      body: JSON.stringify(product),
-      headers: { "Content-type": "application/json" },
-    });
-    const data = await response.json();
-    resolve({ data });
+export const createProduct = async (product) => {
+  const response = await fetch("/products/", {
+    method: "POST",
+    body: JSON.stringify(product),
+    headers: { "Content-type": "application/json" },
   });
-}
+  const data = await response.json();
+  return data;
+};
 
-export function fetchProductsByFilter(filter, sort, pagination) {
+export const fetchProductsByFilter = async (filter, sort, pagination) => {
   // filter = {"category" : {"smartphone","laptop"}}
   // sort = {_sort:"price",_order:"desc"}
   // pagination = {_page=1,_limit=10}
@@ -50,35 +43,19 @@ export function fetchProductsByFilter(filter, sort, pagination) {
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
+  const response = await fetch("/products/getAllProducts?" + queryString);
+  const data = await response.json();
+  const totalItems = await response.headers.get("X-Total-Count");
+  return { products: data, totalItems: +totalItems };
+};
 
-  return new Promise(async (resolve) => {
-    const response = await fetch(
-      "/products?" + queryString
-    );
-    const data = await response.json();
-    const totalItems = await response.headers.get("X-Total-Count");
-    resolve({
-      data: {
-        products: data,
-        totalItems: +totalItems,
-      },
-    });
-  });
-}
-
-export function fetchCategories() {
-  return new Promise(async (resolve) => {
-    const response = await fetch("/categories");
-    const data = await response.json();
-    resolve({ data });
-  });
-}
-export function fetchBrands() {
-  return new Promise(async (resolve) => {
-    const response = await fetch("/brands");
-    const data = await response.json();
-    resolve({ data });
-  });
-}
-
-// In the begninng dispatch then calling reducers from slice file then api manipulation
+export const fetchCategories = async () => {
+  const response = await fetch("/categories");
+  const data = await response.json();
+  return data;
+};
+export const fetchBrands = async () => {
+  const response = await fetch("/brands");
+  const data = await response.json();
+  return data;
+};
