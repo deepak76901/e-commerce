@@ -1,4 +1,5 @@
 import { User } from "../models/User.model.js";
+import { errorHandler } from "../utils/errorHandler.js";
 
 export const fetchUserById = async (req, res, next) => {
   const { id } = req.params;
@@ -18,14 +19,14 @@ export const fetchUserById = async (req, res, next) => {
   }
 };
 
-export const updateUser = async (req, res, next) => {
-  const { id } = req.params;
+export const updateUserAddress = async (req, res, next) => {
+  const { userId } = req.params;
   try {
-    const user = await User.findByIdAndUpdate(id, req.body, {
+    const { id, username,email,addresses } = await User.findByIdAndUpdate(userId, req.body, {
       new: true,
-    }).exec();
-    console.log(user);
-    res.status(200).json(user);
+    });
+
+    res.status(201).json({ id,username,email,addresses });
   } catch (error) {
     next(error);
   }

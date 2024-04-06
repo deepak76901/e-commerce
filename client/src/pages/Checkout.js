@@ -22,6 +22,7 @@ function Checkout() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -71,11 +72,9 @@ function Checkout() {
   const handleForm = (data) => {
     console.log(data);
     dispatch(
-      updateUserAsync({
-        ...user,
-        addresses: [...user.addresses, data],
-      })
+      updateUserAsync({ ...user, addresses:[ ...user.addresses, data] })
     );
+    reset();
   };
 
   return (
@@ -275,8 +274,8 @@ function Checkout() {
                               className="h-4 w-4 mx-5 border-gray-400 text-indigo-600 focus:ring-indigo-600"
                             />
                             <img
-                              className="h-12 w-12 flex-none rounded-full bg-gray-50"
-                              src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
+                              className="h-12 w-12 flex-none rounded-full bg-gray-50 object-cover"
+                              src="https://e7.pngegg.com/pngimages/442/17/png-clipart-computer-icons-user-profile-male-user-heroes-head.png"
                               alt="DP"
                             />
                             <div className="min-w-0 flex-auto">
@@ -386,11 +385,7 @@ function Checkout() {
                       <div className="ml-4 flex flex-1 flex-col">
                         <div>
                           <div className="flex justify-between text-base font-medium text-gray-900">
-                            <h3>
-                              <a href={item.product.href}>
-                                {item.product.title}
-                              </a>
-                            </h3>
+                            <h3>{item.product.title}</h3>
                             <p className="ml-4">
                               ${discountedPrice(item.product)}
                             </p>

@@ -9,7 +9,6 @@ import {
   deleteItemFromCartAsync,
 } from "./CartSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { discountedPrice } from "../../app/constants";
 
 function Cart() {
@@ -34,26 +33,31 @@ function Cart() {
     <>
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="mt-8 p-4 bg-white ">
-          <h2 className="text-3xl pt-3 pb-3 font-semibold bg-white pl-3">
-            Cart
+          <h2 className="text-3xl pt-3 pb-5 pl-7 font-semibold bg-white">
+            Cart Items
           </h2>
           <div className="flow-root">
-            <ul role="list" className="-my-6 divide-y divide-gray-200">
+            <ul role="list" className="-my-6 divide-y divide-gray-200 px-7">
               {items.map((item) => (
                 <li key={item.id} className="flex py-6">
-                  <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                  <Link
+                    to={`/product-detail/${item.product.id}`}
+                    className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+                  >
                     <img
                       src={item.product.thumbnail}
                       alt={item.product.title}
                       className="h-full w-full object-cover object-center"
                     />
-                  </div>
+                  </Link>
 
                   <div className="ml-4 flex flex-1 flex-col">
                     <div>
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <h3>
-                          <a href={item.product.href}>{item.product.title}</a>
+                          <Link to={`/product-detail/${item.product.id}`}>
+                            {item.product.title}
+                          </Link>
                         </h3>
                         <p className="ml-4">${discountedPrice(item.product)}</p>
                       </div>
