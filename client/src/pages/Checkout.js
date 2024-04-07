@@ -15,7 +15,6 @@ import {
   selectCurrentOrder,
 } from "../features/order/OrderSlice";
 import { selectUserInfo } from "../features/user/userSlice";
-import Navbar from "../features/Navbar/Navbar";
 import { discountedPrice } from "../app/constants";
 
 function Checkout() {
@@ -25,10 +24,10 @@ function Checkout() {
     reset,
     formState: { errors },
   } = useForm();
+  const dispatch = useDispatch();
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
-  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(true);
   const user = useSelector(selectUserInfo);
@@ -52,18 +51,17 @@ function Checkout() {
     setSelectedAddress(user.addresses[e.target.value]);
   };
   const handlePayment = (e) => {
-    console.log(e.target.value);
     setPaymentMethod(e.target.value);
   };
 
-  const handleOrder = (e) => {
+  const handleOrder = () => {
     const order = {
+      userId:user.id,
       items,
       totalItems,
       totalAmount,
       selectedAddress,
       paymentMethod,
-      user,
       status: "pending",
     };
     dispatch(createOrderAsync(order));

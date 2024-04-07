@@ -1,5 +1,5 @@
 export const createOrder = async (order) => {
-  const response = await fetch("/orders", {
+  const response = await fetch("/user/createOrder/"+order.userId, {
     method: "POST",
     body: JSON.stringify(order),
     headers: { "Content-type": "application/json" },

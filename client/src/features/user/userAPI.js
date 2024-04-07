@@ -1,5 +1,5 @@
 export const fetchLoggedInUserOrders = async (userId) => {
-  const response = await fetch("/orders/?users.id=" + userId);
+  const response = await fetch("/user/orders/" + userId);
   const data = await response.json();
   return data;
 };
@@ -11,8 +11,8 @@ export const fetchLoggedInUser = async (userId) => {
 };
 
 export const updateUser = async (update) => {
-  const response = await fetch("/user/updateAddress/" + update.id, {
-    method: "PUT",
+  const response = await fetch("/user/updateUser/" + update.id, {
+    method: "PATCH",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify(update),
   });

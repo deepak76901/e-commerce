@@ -1,11 +1,15 @@
 import Router from "express";
 import {
+  createOrder,
   fetchUserById,
-  updateUserAddress,
+  fetchUserOrders,
+  updateUser,
 } from "../controllers/user.controller.js";
 
 export const router = Router();
 
 router
   .get("/fetchuser/:id", fetchUserById)
-  .put("/updateAddress/:userId", updateUserAddress);
+  .patch("/updateUser/:userId", updateUser)
+  .post("/createOrder/:userId", createOrder)
+  .get("/orders/:userId",fetchUserOrders)

@@ -19,14 +19,45 @@ export const fetchUserById = async (req, res, next) => {
   }
 };
 
-export const updateUserAddress = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
   const { userId } = req.params;
   try {
-    const { id, username,email,addresses } = await User.findByIdAndUpdate(userId, req.body, {
-      new: true,
-    });
+    const { id, username, email, addresses } = await User.findByIdAndUpdate(
+      userId,
+      req.body,
+      {
+        new: true,
+      }
+    );
 
-    res.status(201).json({ id,username,email,addresses });
+    res.status(201).json({ id, username, email, addresses });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createOrder = async (req, res, next) => {
+  try {
+    const { orders } = await User.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $push: {
+          orders: req.body,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json(orders);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const fetchUserOrders = async (req, res, next) => {
+  try {
+    const { orders } = await User.findById(req.params.userId);
+    res.status(200).json(orders);
   } catch (error) {
     next(error);
   }
