@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon, StarIcon } from "@heroicons/react/24/outline";
-// import { fetchAllProducts, } from "../ProductAPI";
 import {
   selectAllProducts,
   selectTotalItems,
@@ -12,6 +11,7 @@ import {
   selectCategories,
   fetchBrandsAsync,
   fetchCategoryAsync,
+  resetProductForm,
 } from "../../Product/ProductSlice";
 import {
   ChevronDownIcon,
@@ -25,29 +25,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { ITEMS_PER_PAGE } from "../../../app/constants";
 
-const items = [
-  {
-    id: 1,
-    title: "Back End Developer",
-    department: "Engineering",
-    type: "Full-time",
-    location: "Remote",
-  },
-  {
-    id: 2,
-    title: "Front End Developer",
-    department: "Engineering",
-    type: "Full-time",
-    location: "Remote",
-  },
-  {
-    id: 3,
-    title: "User Interface Designer",
-    department: "Design",
-    type: "Full-time",
-    location: "Remote",
-  },
-];
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -58,39 +35,6 @@ const sortOptions = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
-const oldproducts = [
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    thumbnail:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 2,
-    name: "Basic Tee",
-    href: "#",
-    thumbnail:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 3,
-    name: "Basic Tee",
-    href: "#",
-    thumbnail:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-];
 
 export default function AdminProductList() {
   const dispatch = useDispatch();
@@ -161,6 +105,7 @@ export default function AdminProductList() {
   useEffect(() => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoryAsync());
+    dispatch(resetProductForm())
   }, []);
 
   return (
@@ -470,10 +415,10 @@ function ProductGrid({ products }) {
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {products.map((product) => (
-              <div>
+              <div  key={product.id}>
                 <Link to={`/admin/product-detail/${product.id}`}>
                   <div
-                    key={product.id}
+                   
                     className="group relative border-solid border-2 rounded-md border-gray-500 p-2"
                   >
                     <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
@@ -581,6 +526,7 @@ function Pagination({ page, setPage, handlePage, totalItems }) {
 
             {Array.from({ length: totalPages }).map((ele, index) => (
               <div
+              key={index}
                 onClick={(e) => handlePage(index + 1)}
                 aria-current="page"
                 className={`relative z-10 inline-flex items-center ${

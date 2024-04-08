@@ -12,10 +12,9 @@ import { useSelector } from "react-redux";
 import { selectLoggedInUser } from "../auth/authSlice";
 
 const navigation = [
-  { name: "Products", link: "/", user: true },
-  { name: "Team", link: "#", user: true },
-  { name: "Products", link: "/admin", admin: true },
-  { name: "Orders", link: "/admin/orders", admin: true },
+  { name: "Products", link: "/",isAdmin:false },
+  { name: "Admin's List", link: "/admin", isAdmin : true },
+  { name: "Orders", link: "/admin/orders", isAdmin : true },
 ];
 
 function classNames(...classes) {
@@ -56,9 +55,9 @@ function Navbar({ children }) {
                     </Link>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
-                    {/* <div className="flex space-x-4">
+                    <div className="flex space-x-4">
                       {navigation.map((item) =>
-                        item[user.role] ? (
+                        item.isAdmin === user.isAdmin ? (
                           <Link
                             key={item.name}
                             to={item.link}
@@ -74,7 +73,7 @@ function Navbar({ children }) {
                           </Link>
                         ) : null
                       )}
-                    </div> */}
+                    </div>
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">

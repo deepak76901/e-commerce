@@ -52,6 +52,15 @@ function App() {
               </Protected>
             }
           />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedAdmin>
+                <Navbar />
+                <AdminHome />
+              </ProtectedAdmin>
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/logout" element={<LogOut />} />
@@ -122,38 +131,38 @@ function App() {
           <Route
             path="/admin/product-detail/:id"
             element={
-              <>
+              <ProtectedAdmin>
                 <Navbar />
                 <AdminProductDetailsPage />
-              </>
+              </ProtectedAdmin>
             }
           />
           <Route
             path="/admin/product-form"
             element={
-              <>
+              <ProtectedAdmin>
                 <Navbar />
                 <AddProductPage />
-              </>
+              </ProtectedAdmin>
             }
           />
           <Route
             path="/admin/product-form/edit/:id"
             element={
-              <>
+              <ProtectedAdmin>
                 <Navbar />
                 <AddProductPage />
-              </>
+              </ProtectedAdmin>
             }
           />
 
           <Route
             path="/admin/orders"
             element={
-              <>
+              <ProtectedAdmin>
                 <Navbar />
                 <AdminOrdersPage />
-              </>
+              </ProtectedAdmin>
             }
           />
         </Routes>

@@ -11,8 +11,18 @@ export const fetchProductById = async (id) => {
 };
 
 export const createProduct = async (product) => {
-  const response = await fetch("/products/", {
+  const response = await fetch("/products/create", {
     method: "POST",
+    body: JSON.stringify(product),
+    headers: { "Content-type": "application/json" },
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const updateProduct = async ({id,product}) => {
+  const response = await fetch("/products/update/"+id, {
+    method: "PATCH",
     body: JSON.stringify(product),
     headers: { "Content-type": "application/json" },
   });

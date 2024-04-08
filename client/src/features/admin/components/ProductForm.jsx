@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createProductAsync,
   fetchProductByIdAsync,
+  resetProductForm,
   selectBrands,
   selectCategories,
+  selectCreatedProduct,
   selectProductById,
+  updateProductAsync,
 } from "../../Product/ProductSlice";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { fetchProductById } from "../../Product/ProductAPI";
 
 export default function ProductForm() {
@@ -17,13 +20,15 @@ export default function ProductForm() {
   const brands = useSelector(selectBrands);
   const categories = useSelector(selectCategories);
   const params = useParams();
+  const navigate = useNavigate();
   const selectedProduct = useSelector(selectProductById);
-
+  const createdProduct = useSelector(selectCreatedProduct);
   const {
     register,
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -49,31 +54,36 @@ export default function ProductForm() {
     }
   }, [selectedProduct]);
 
+  const handleForm = (data) => {
+    console.log("Data", data);
+    const product = { ...data };
+    product.images = [product.thumbnail, product.image1, product.image2, product.image3];
+    product.price = +product.price;
+    product.stock = +product.stock;
+    product.discountPercentage = +product.discountPercentage;
+    product.rating = +product.rating;
+
+    if (params.id) {
+      dispatch(updateProductAsync({ id: params.id, product }));
+      dispatch(resetProductForm());
+    } else {
+      dispatch(createProductAsync(product));
+      reset();
+    }
+  };
+
+  useEffect(() => {
+    if (createdProduct) {
+      navigate(`/product-detail/${createdProduct.id}`);
+    }
+  }, [createdProduct]);
+
   return (
     <div className="mx-20 my-5 ">
       <form
         noValidate
         className="space-y-6"
-        onSubmit={handleSubmit((data) => {
-          const product = { ...data };
-          product.images = [
-            product.image1,
-            product.image2,
-            product.image3,
-            product.thumbnail,
-          ];
-          product.price = +product.price
-          product.stock = +product.stock
-          product.discountPercentage = +product.discountPercentage
-          product.rating = +product.rating;
-          delete product["image1"];
-          delete product["image2"];
-          delete product["image3"];
-          delete product["thumbnail"];
-          console.log(product);
-
-          dispatch(createProductAsync(product));
-        })}
+        onSubmit={handleSubmit(handleForm)}
       >
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
@@ -137,8 +147,10 @@ export default function ProductForm() {
                     })}
                   >
                     <option value="">--choose brand--</option>
-                    {brands.map((brand) => (
-                      <option value={brand.value}>{brand.label}</option>
+                    {brands.map((brand, index) => (
+                      <option key={index} value={brand.value}>
+                        {brand.label}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -158,8 +170,10 @@ export default function ProductForm() {
                     })}
                   >
                     <option value="">--choose category--</option>
-                    {categories.map((category) => (
-                      <option value={category.value}>{category.label}</option>
+                    {categories.map((category, index) => (
+                      <option key={index} value={category.value}>
+                        {category.label}
+                      </option>
                     ))}
                   </select>
                 </div>

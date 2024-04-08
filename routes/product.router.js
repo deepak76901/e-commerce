@@ -10,6 +10,6 @@ export const router = Router();
 
 router
   .get("/getAllProducts", fetchAllProducts)
-  .post("/", createProduct)
+  .post("/create", createProduct)
   .get("/:id", fetchProductById)
-  .patch("/:id", updateProduct);
+  .patch("/update/:id", updateProduct);

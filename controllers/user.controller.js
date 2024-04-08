@@ -13,7 +13,6 @@ export const fetchUserById = async (req, res, next) => {
       email: user.email,
       isAdmin: user.isAdmin,
       addresses: user.addresses,
-      orders: user.orders,
     });
   } catch (error) {
     next(error);

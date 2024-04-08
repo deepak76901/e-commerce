@@ -6,6 +6,7 @@ import {
   fetchCategories,
   fetchProductById,
   createProduct,
+  updateProduct,
 } from "./ProductAPI";
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   status: "idle",
   totalItems: 0,
   selectedProduct: null,
+  createdProduct:null
 };
 
 export const fetchAllProductsAsync = createAsyncThunk(
@@ -63,6 +65,14 @@ export const createProductAsync = createAsyncThunk(
   }
 );
 
+export const updateProductAsync = createAsyncThunk(
+  "product/updateProduct",
+  async ({ id, product }) => {
+    const response = await updateProduct({ id, product });
+    return response;
+  }
+);
+
 export const productSlice = createSlice({
   name: "product",
   initialState,
@@ -70,6 +80,9 @@ export const productSlice = createSlice({
   reducers: {
     increment: (state) => {
       state.value = 1;
+    },
+    resetProductForm: (state) => {
+      state.selectedProduct = null;
     },
   },
 
@@ -116,17 +129,29 @@ export const productSlice = createSlice({
       })
       .addCase(createProductAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        state.createdProduct = action.payload;
+      })
+      .addCase(createProductAsync.rejected, (state) => {
+        state.status = "idle";
+        state.selectedProduct = null;
+      })
+      .addCase(updateProductAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateProductAsync.fulfilled, (state, action) => {
+        state.status = "idle";
         state.products.push(action.payload);
       });
   },
 });
 
-export const { increment } = productSlice.actions;
+export const { increment, resetProductForm } = productSlice.actions;
 
 export const selectAllProducts = (state) => state.product.products;
 export const selectBrands = (state) => state.product.brands;
 export const selectCategories = (state) => state.product.categories;
 export const selectProductById = (state) => state.product.selectedProduct;
+export const selectCreatedProduct = state => state.product.createdProduct;
 
 export const selectTotalItems = (state) => state.product.totalItems;
 
