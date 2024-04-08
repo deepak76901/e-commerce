@@ -113,10 +113,10 @@ function App() {
           <Route
             path="/order-success/:id"
             element={
-              <>
+              <Protected>
                 <Navbar />
                 <OrderSuccessPage />
-              </>
+              </Protected>
             }
           />
           <Route

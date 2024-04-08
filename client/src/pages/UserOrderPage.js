@@ -4,8 +4,8 @@ import Navbar from '../features/Navbar/Navbar'
 
 export default function UserOrderPage() {
   return (
-    <div>
+    <>
       <UserOrders/>
-    </div>
+    </>
   )
 }

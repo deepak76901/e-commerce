@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import {
@@ -7,9 +7,12 @@ import {
   selectItems,
   updateCartAsync,
 } from "../features/cart/CartSlice";
-import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { updateUserAsync } from "../features/user/userSlice";
+import {
+  fetchLoggedInUserOrdersAsync,
+  selectUserOrders,
+  updateUserAsync,
+} from "../features/user/userSlice";
 import {
   createOrderAsync,
   selectCurrentOrder,
@@ -24,15 +27,20 @@ function Checkout() {
     reset,
     formState: { errors },
   } = useForm();
+  const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
 
-  const [open, setOpen] = useState(true);
   const user = useSelector(selectUserInfo);
-  const currentOrder = useSelector(selectCurrentOrder);
+  const orders = useSelector(selectUserOrders);
+  const currentOrder = useSelector(selectCurrentOrder)
+  console.log("User Orders:",orders)
+  
   const items = useSelector(selectItems);
+
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
   const totalAmount = items.reduce(
     (amount, item) => discountedPrice(item.product) * item.quantity + amount,
@@ -54,9 +62,10 @@ function Checkout() {
     setPaymentMethod(e.target.value);
   };
 
-  const handleOrder = () => {
+  const handleOrder =  () => {
+   if(selectedAddress && paymentMethod){
     const order = {
-      userId:user.id,
+      userId: user.id,
       items,
       totalItems,
       totalAmount,
@@ -65,20 +74,24 @@ function Checkout() {
       status: "pending",
     };
     dispatch(createOrderAsync(order));
+   }else{
+    alert("Please enter Address and Payment method")
+   }
   };
 
   const handleForm = (data) => {
     console.log(data);
     dispatch(
-      updateUserAsync({ ...user, addresses:[ ...user.addresses, data] })
+      updateUserAsync({ ...user, addresses: [...user.addresses, data] })
     );
     reset();
+    navigate()
   };
 
   return (
     <>
       {currentOrder && (
-        <Navigate to={`/order-success/${currentOrder.id}`}></Navigate>
+        <Navigate to={`/order-success/${currentOrder._id}`}></Navigate>
       )}
       {!items.length && <Navigate to="/"></Navigate>}
 

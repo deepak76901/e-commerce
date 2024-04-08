@@ -1,10 +1,8 @@
 import { Cart } from "../models/cart.model.js";
 
 export const fetchCartByUser = async (req, res, next) => {
-  const { user } = req.query;
-
   try {
-    const cartItems = await Cart.find({ user: user }).populate([
+    const cartItems = await Cart.find({ user: req.params.userId }).populate([
       "user",
       "product",
     ]);
@@ -53,8 +51,11 @@ export const updateCart = async (req, res, next) => {
 };
 
 export const fetchCart = async (req, res, next) => {
-  const docs = await Cart.find({}).populate(["user", "product"]);
-  const totalDocs = await Cart.countDocuments();
-  res.json({ docs, totalDocs });
-  console.log(docs);
+  try {
+    const docs = await Cart.find({}).populate(["user", "product"]);
+    const totalDocs = await Cart.countDocuments();
+    res.json({ docs, totalDocs });
+  } catch (error) {
+    next(error);
+  }
 };

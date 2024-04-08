@@ -9,8 +9,9 @@ export const addToCart = async (item) => {
 };
 
 export const fetchItemsByUserId = async (userId) => {
-  const response = await fetch("/cart?user=" + userId);
+  const response = await fetch("/cart/" + userId);
   const data = await response.json();
+  console.log(data)
   return data;
 };
 
@@ -35,9 +36,11 @@ export const deleteItemFromCart = async (itemId) => {
 
 export const resetCart = async (userId) => {
   const response = await fetchItemsByUserId(userId);
-  const items = response.data;
+  const items = response;
+  console.log(items)
   for (let item of items) {
     await deleteItemFromCart(item.id);
   }
+  console.log(items)
   return { status: "success" };
 };

@@ -21,10 +21,7 @@ const userSchema = new Schema({
   },
   addresses: {
     type: [SchemaType.Mixed],
-  },
-  orders: {
-    type: [SchemaType.Mixed],
-  },
+  }  
 });
 
 const virtuals = userSchema.virtual("id");

@@ -10,7 +10,7 @@ import {
 export const router = Router();
 
 router
-  .get("/", fetchCartByUser)
+  .get("/:userId", fetchCartByUser)
   .post("/addToCart", addToCart)
   .get("/fetchCart", fetchCart)
   .delete("/deleteItem/:id", deleteFromCart)
