@@ -8,6 +8,7 @@ import { router as brandRouter } from "./routes/brand.router.js";
 import { router as userRouter } from "./routes/user.router.js";
 import { router as authRouter } from "./routes/auth.router.js";
 import { router as cartRouter } from "./routes/cart.router.js";
+import { router as orderRouter } from "./routes/order.router.js";
 import morgan from "morgan";
 
 dotenv.config({
@@ -46,6 +47,7 @@ app.use("/brands", brandRouter);
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/cart", cartRouter);
+app.use("/orders", orderRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

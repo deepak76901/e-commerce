@@ -18,7 +18,7 @@ export const updateOrder = async (order) => {
   return data;
 };
 
-export const fetchAllOrders = async (sort, pagination) => {
+export const fetchAllOrders = async ({sort, pagination}) => {
   let queryString = "";
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
@@ -26,8 +26,9 @@ export const fetchAllOrders = async (sort, pagination) => {
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
-  const response = await fetch("/orders?" + queryString);
+  console.log("Query String",queryString)
+  const response = await fetch("/orders/fetchAll?" + queryString);
   const data = await response.json();
-  const totalOrders = await response.headers.get("X-Total-Count");
+  const totalOrders = response.headers.get("X-Total-Count");
   return { orders: data, totalOrders: +totalOrders };
 };

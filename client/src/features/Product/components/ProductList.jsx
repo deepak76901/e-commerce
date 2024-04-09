@@ -145,7 +145,6 @@ export default function ProductList() {
   };
 
   const handlePage = (page) => {
-    console.log({ page });
     setPage(page);
   };
 

@@ -39,14 +39,16 @@ function AdminOrders() {
   };
   const handlePage = (page) => {
     setPage(page);
-    const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
-    dispatch(fetchAllOrdersAsync({ sort, pagination }));
   };
   const handleSort = (sortOption) => {
     const sort = { _sort: sortOption.sort, _order: sortOption.order };
-    console.log({ sort });
     setSort(sort);
   };
+
+  useEffect(() => {
+    const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
+    dispatch(fetchAllOrdersAsync({ sort, pagination }));
+  }, [sort, page]);
 
   const chooseColor = (status) => {
     switch (status) {
@@ -63,21 +65,19 @@ function AdminOrders() {
     }
   };
 
-  useEffect(() => {
-    handlePage();
-    
-  }, [dispatch, sort, page]);
-
   return (
     <div className="overflow-x-auto">
       <div className="bg-gray-100 flex items-center justify-center font-sans overflow-hidden">
         <div className="w-full">
           <div className="bg-white shadow-md rounded my-6">
-            <table className="min-w-max w-full table-auto">
+            <table className="min-w-max w-full table-auto ">
               <thead>
-                <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal border border-gray-500">
+                  <th className="py-3 px-2 cursor-pointer border-r border-gray-500 w-6">
+                    Serial No.
+                  </th>
                   <th
-                    className="py-3 px-6 text-left cursor-pointer"
+                    className="py-3 px-6 text-left cursor-pointer border-r border-gray-500"
                     onClick={(e) =>
                       handleSort({
                         sort: "id",
@@ -85,7 +85,7 @@ function AdminOrders() {
                       })
                     }
                   >
-                    Order#{" "}
+                    Order Id
                     {sort._sort === "id" &&
                       (sort._order === "asc" ? (
                         <ArrowUpIcon className="w-4 h-4 inline"></ArrowUpIcon>
@@ -93,9 +93,11 @@ function AdminOrders() {
                         <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
                       ))}
                   </th>
-                  <th className="py-3 px-6 text-left">Items</th>
+                  <th className="py-3 px-6 text-left border-r border-gray-500">
+                    Items
+                  </th>
                   <th
-                    className="py-3 px-6 text-left cursor-pointer"
+                    className="py-3 px-6 text-left cursor-pointer border-r border-gray-500"
                     onClick={(e) =>
                       handleSort({
                         sort: "totalAmount",
@@ -111,55 +113,61 @@ function AdminOrders() {
                         <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
                       ))}
                   </th>
-                  <th className="py-3 px-6 text-center">Shipping Address</th>
-                  <th className="py-3 px-6 text-center">Status</th>
+                  <th className="py-3 px-6 text-center border-r border-gray-500">
+                    Shipping Address
+                  </th>
+                  <th className="py-3 px-6 text-center border-r border-gray-500">
+                    Status
+                  </th>
                   <th className="py-3 px-6 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-600 text-sm font-light">
-                {orders.map((order) => (
-                  <tr className="border-b border-gray-200 hover:bg-gray-100">
-                    <td className="py-3 px-6 text-left whitespace-nowrap">
+              <tbody className="text-gray-600 text-sm font-light divide-y-2">
+                {orders.map((order, index) => (
+                  <tr className="border-b border-gray-200 hover:bg-gray-100 divide-x-2">
+                    <td className="text-center font-semibold h-20">
+                      {(page - 1) * ITEMS_PER_PAGE + (index + 1)}
+                    </td>
+                    <td className="py-3 px-6 text-left whitespace-nowrap w-20">
                       <div className="flex items-center">
                         <div className="mr-2"></div>
-                        <span className="font-medium">{order.id}</span>
+                        <span className="font-medium">{order._id}</span>
                       </div>
                     </td>
-                    <td className="py-3 px-6 text-left">
+                    <td className="py-3 px-6 text-left w-48">
                       {order.items.map((item) => (
                         <div className="flex items-center">
                           <div className="mr-2">
                             <img
                               className="w-6 h-6 rounded-full"
-                              src={item.thumbnail}
+                              src={item.product.thumbnail}
                             />
                           </div>
-                          <span>
-                            {item.title} - #{item.quantity} - $
-                            {discountedPrice(item)}
+                          <span className="font-semibold">
+                            <p>{item.product.title}</p>
+                            Quan. - {item.quantity}, Price - $
+                            {discountedPrice(item.product)}
                           </span>
                         </div>
                       ))}
                     </td>
-                    <td className="py-3 px-6 text-center">
+                    <td className="py-3 px-6 text-center w-16">
                       <div className="flex items-center justify-center">
                         ${order.totalAmount}
                       </div>
                     </td>
-                    <td className="py-3 px-6 text-center">
-                      <div className="">
-                        <div>
-                          <strong>{order.selectedAddress.name}</strong>,
+                    <td className="py-3 px-6 w-60">
+                      <div className=" inline ">
+                        <div className="text-sm font-semibold">
+                          {order.selectedAddress.name}
                         </div>
-                        <div>{order.selectedAddress.street},</div>
-                        <div>{order.selectedAddress.city}, </div>
-                        <div>{order.selectedAddress.state}, </div>
-                        <div>{order.selectedAddress.pinCode}, </div>
-                        <div>{order.selectedAddress.phone}, </div>
+                        <p className="line-clamp-2">
+                          {`${order.selectedAddress.street}${order.selectedAddress.city},${order.selectedAddress.state},${order.selectedAddress.pinCode}${order.selectedAddress.phone}`}
+                        </p>
                       </div>
                     </td>
                     {/* video me 6:54 se dekh samjh aa jayega*/}
-                    <td className="py-3 px-6 text-center">
+                    <td className="py-3 px-6 text-center w-16">
                       {order.id === editableOrderId ? (
                         <select onChange={(e) => handleUpdate(e, order)}>
                           <option value="pending">Pending</option>
@@ -177,7 +185,7 @@ function AdminOrders() {
                         </span>
                       )}
                     </td>
-                    <td className="py-3 px-6 text-center">
+                    <td className="py-3 px-6 text-center w-16">
                       <div className="flex item-center justify-center">
                         <div className="w-6 mr-4 transform hover:text-purple-500 hover:scale-120">
                           <EyeIcon

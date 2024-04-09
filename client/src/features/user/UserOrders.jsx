@@ -22,7 +22,7 @@ function UserOrders() {
           <h1 className=" text-4xl font-semibold ">
             You have No Orders
           </h1>
-          <Link to="/" className="text-xl w-32 bg-indigo-500 hover:bg-indigo-300 text-white font-semibold p-2 rounded-md">Go to Home</Link>
+          <Link to="/" className="text-xl w-32 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold p-2 rounded-md">Go to Home</Link>
         </div>
       )}
       {orders.map((order, index) => (
