@@ -9,7 +9,7 @@ export const createOrder = async (order) => {
 };
 
 export const updateOrder = async (order) => {
-  const response = await fetch("/orders/" + order.id, {
+  const response = await fetch("/orders/update/" + order._id, {
     method: "PATCH",
     body: JSON.stringify(order),
     headers: { "Content-type": "application/json" },

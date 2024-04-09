@@ -23,10 +23,10 @@ function AdminOrders() {
   const totalOrders = useSelector(selectTotalOrders);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState({});
-  const [editableOrderId, setEditableOrderId] = useState(-1);
+  const [editableOrderId, setEditableOrderId] = useState(null);
 
   const handleEdit = (order) => {
-    setEditableOrderId(order.id);
+    setEditableOrderId(order._id);
   };
   const handleShow = () => {
     console.log("handleShow");
@@ -35,7 +35,7 @@ function AdminOrders() {
   const handleUpdate = (e, order) => {
     const updatedOrder = { ...order, status: e.target.value };
     dispatch(updateOrderAsync(updatedOrder));
-    setEditableOrderId(-1);
+    setEditableOrderId(null);
   };
   const handlePage = (page) => {
     setPage(page);
@@ -124,7 +124,7 @@ function AdminOrders() {
               </thead>
               <tbody className="text-gray-600 text-sm font-light divide-y-2">
                 {orders.map((order, index) => (
-                  <tr className="border-b border-gray-200 hover:bg-gray-100 divide-x-2">
+                  <tr className="border-b border-gray-200 hover:bg-gray-100 divide-x-2" key={index}>
                     <td className="text-center font-semibold h-20">
                       {(page - 1) * ITEMS_PER_PAGE + (index + 1)}
                     </td>
@@ -135,8 +135,8 @@ function AdminOrders() {
                       </div>
                     </td>
                     <td className="py-3 px-6 text-left w-48">
-                      {order.items.map((item) => (
-                        <div className="flex items-center">
+                      {order.items.map((item,index) => (
+                        <div className="flex items-center" key={index}>
                           <div className="mr-2">
                             <img
                               className="w-6 h-6 rounded-full"
@@ -168,7 +168,7 @@ function AdminOrders() {
                     </td>
                     {/* video me 6:54 se dekh samjh aa jayega*/}
                     <td className="py-3 px-6 text-center w-16">
-                      {order.id === editableOrderId ? (
+                      {order._id === editableOrderId ? (
                         <select onChange={(e) => handleUpdate(e, order)}>
                           <option value="pending">Pending</option>
                           <option value="dispatched">Dispatched</option>

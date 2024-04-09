@@ -29,7 +29,7 @@ export const updateOrderAsync = createAsyncThunk(
 export const fetchAllOrdersAsync = createAsyncThunk(
   "order/fetchAllOrders",
   async ({ sort, pagination }) => {
-    const response = await fetchAllOrders({sort, pagination});
+    const response = await fetchAllOrders({ sort, pagination });
     // The value we return becomes the `fulfilled` action payload
     return response;
   }
@@ -68,9 +68,9 @@ export const orderSlice = createSlice({
       .addCase(updateOrderAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.orders.findIndex(
-          (order) => order.id === action.payload.id
+          (order) => order._id === action.payload._id
         );
-        state.items[index] = action.payload;
+        state.orders[index] = action.payload;
       });
   },
 });

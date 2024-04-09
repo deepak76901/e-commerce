@@ -2,7 +2,6 @@ import { Orders } from "../models/order.model.js";
 
 export const fetchAll = async (req, res, next) => {
   try {
-
     let sortBy = req.query._sort || "totalAmount";
     let order = req.query._order || "asc";
     let page = req.query._page || 1;
@@ -17,6 +16,24 @@ export const fetchAll = async (req, res, next) => {
 
     res.set("X-Total-Count", totalDocs);
     res.status(200).json(docs);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateOrder = async (req, res, next) => {
+  try {
+    const order = await Orders.findByIdAndUpdate(
+      req.body._id,
+      {
+        $set: {
+          status: req.body.status,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json(order);
   } catch (error) {
     next(error);
   }

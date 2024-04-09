@@ -1,12 +1,12 @@
 import { Product } from "../models/Product.model.js";
 
 export const createProduct = async (req, res, next) => {
-  // we get product details from API
-  const product = req.body
-  console.log(product)
-  const newProduct = new Product(product);
-
+  let product = req.body;
   try {
+    const productCount = Product.countDocuments();
+    // product = {...product,id:productCount+1}
+    const newProduct = new Product(product);
+
     const doc = await newProduct.save();
     res.status(201).json(doc);
   } catch (error) {
