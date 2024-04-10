@@ -38,12 +38,6 @@ app.listen(
   console.log("Server is listening on PORT : " + process.env.PORT)
 );
 
-app.get("/", (req, res) => {
-  res.json({
-    status: "app Started Successfully",
-  });
-});
-
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 app.use("/brands", brandRouter);
