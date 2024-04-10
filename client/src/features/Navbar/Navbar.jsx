@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, useState } from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
@@ -6,15 +6,17 @@ import {
   ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { selectItems } from "../cart/CartSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedInUser } from "../auth/authSlice";
+import {toggleTheme} from "../Theme/ThemeSlice"
 
 const navigation = [
-  { name: "Products", link: "/",isAdmin:false },
-  { name: "Admin's List", link: "/admin", isAdmin : true },
-  { name: "Orders", link: "/admin/orders", isAdmin : true },
+  { name: "Products", link: "/", isAdmin: false },
+  { name: "Admin's List", link: "/admin", isAdmin: true },
+  { name: "Orders", link: "/admin/orders", isAdmin: true },
 ];
 
 function classNames(...classes) {
@@ -24,10 +26,12 @@ function classNames(...classes) {
 function Navbar({ children }) {
   const items = useSelector(selectItems);
   const user = useSelector(selectLoggedInUser);
+  const {theme} = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
 
   return (
-    <>
-      <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-50">
+    
+      <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-30">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -77,6 +81,14 @@ function Navbar({ children }) {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  <button className="mx-2" onClick={() => {dispatch(toggleTheme())}}>
+                    {theme === "light" ? (
+                      <IoMoonOutline className="text-gray-400 h-6 w-auto cursor-pointer hover:text-white" />
+                    ) : (
+                      <IoSunnyOutline className="text-gray-200 h-6 w-auto cursor-pointer" />
+                    )}
+                  </button>
+                  {/* Shopping Cart Icon */}
                   <Link to="/cart">
                     <button
                       type="button"
@@ -188,7 +200,6 @@ function Navbar({ children }) {
           </>
         )}
       </Disclosure>
-    </>
   );
 }
 

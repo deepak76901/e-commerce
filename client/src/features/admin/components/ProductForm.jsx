@@ -79,7 +79,7 @@ export default function ProductForm() {
   }, [createdProduct]);
 
   return (
-    <div className="mx-20 my-5 ">
+    <div className="mx-20 my-5 pb-8">
       <form
         noValidate
         className="space-y-6"
@@ -141,7 +141,7 @@ export default function ProductForm() {
                   Brands
                 </label>
                 <div className="mt-2">
-                  <select
+                  <select className="w-full sm:w-52"
                     {...register("brand", {
                       required: "brand is required",
                     })}
@@ -164,7 +164,7 @@ export default function ProductForm() {
                   Categories
                 </label>
                 <div className="mt-2">
-                  <select
+                  <select className="w-full sm:w-52"
                     {...register("category", {
                       required: "category is required",
                     })}
@@ -331,7 +331,7 @@ export default function ProductForm() {
         <div>
           <button
             type="submit"
-            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="flex w-full sm:w-56 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Submit
           </button>

@@ -25,7 +25,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { ITEMS_PER_PAGE } from "../../../app/constants";
 
-
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
   { name: "Price: Low to High", sort: "price", order: "asc", current: false },
@@ -105,7 +104,7 @@ export default function AdminProductList() {
   useEffect(() => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoryAsync());
-    dispatch(resetProductForm())
+    dispatch(resetProductForm());
   }, []);
 
   return (
@@ -121,7 +120,7 @@ export default function AdminProductList() {
           ></MobileFilter>
 
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+            <div className="flex items-baseline justify-between border-b border-gray-200 py-5">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900">
                 All Products
               </h1>
@@ -205,11 +204,10 @@ export default function AdminProductList() {
 
                 {/* Product grid */}
                 <div className="lg:col-span-3">
-                  <Link to="/admin/product-form">
-                    <button className="flex items-center justify-center rounded-md border   border-transparent bg-green-700 mt-3 mx-8 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-500">
-                      Add New Product
-                    </button>
+                  <Link to="/admin/product-form" className="flex items-center justify-center rounded-md border   border-transparent bg-green-700 mt-3 mx-8 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-500 w-36">
+                    Add New Product
                   </Link>
+
                   <ProductGrid products={products}></ProductGrid>
                 </div>
               </div>
@@ -276,7 +274,7 @@ function MobileFilter({
               </div>
 
               {/* Filters */}
-              <form className="mt-4 border-t border-gray-200">
+              <form className="mt-4 border-t border-gray-200 z-60">
                 {filters.map((section) => (
                   <Disclosure
                     as="div"
@@ -415,12 +413,9 @@ function ProductGrid({ products }) {
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {products.map((product) => (
-              <div  key={product.id}>
+              <div key={product.id}>
                 <Link to={`/admin/product-detail/${product.id}`}>
-                  <div
-                   
-                    className="group relative border-solid border-2 rounded-md border-gray-500 p-2"
-                  >
+                  <div className="group relative border-solid border-2 rounded-md border-gray-500 p-2">
                     <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
                       <img
                         src={product.thumbnail}
@@ -461,7 +456,7 @@ function ProductGrid({ products }) {
                 </Link>
                 <div>
                   <Link
-                    to={`/admin/product-form/edit/${product.id}`} 
+                    to={`/admin/product-form/edit/${product.id}`}
                     className="flex items-center justify-center rounded-md border   border-transparent bg-indigo-600 mt-3 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
                   >
                     Edit Product
@@ -526,7 +521,7 @@ function Pagination({ page, setPage, handlePage, totalItems }) {
 
             {Array.from({ length: totalPages }).map((ele, index) => (
               <div
-              key={index}
+                key={index}
                 onClick={(e) => handlePage(index + 1)}
                 aria-current="page"
                 className={`relative z-10 inline-flex items-center ${

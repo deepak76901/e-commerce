@@ -1,10 +1,10 @@
 import { ITEMS_PER_PAGE } from "../../app/constants";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
-export default function Pagination({ page, setPage, handlePage, totalItems }) {
+export default function Pagination({ page, setPage, handlePage, totalItems, theme }) {
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   return (
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 ">
+    <div className={`flex items-center justify-between border-t  px-4 py-3 sm:px-6 ${theme==="dark" ? "bg-gray-700" : "border-gray-200 bg-white"}`}>
       <div className="flex flex-1 justify-between sm:hidden">
         <div
           onClick={(e) => handlePage(page > 1 ? page - 1 : page)}
@@ -21,7 +21,7 @@ export default function Pagination({ page, setPage, handlePage, totalItems }) {
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm text-gray-700">
+          <p className={`text-sm ${theme==="dark" ? "text-white bg-gray-700" : "text-gray-700"}`}>
             Showing{" "}
             <span className="font-medium">
               {(page - 1) * ITEMS_PER_PAGE + 1}
@@ -57,7 +57,7 @@ export default function Pagination({ page, setPage, handlePage, totalItems }) {
                 className={`relative z-10 inline-flex items-center cursor-pointer ${
                   index + 1 === page
                     ? "bg-indigo-600 hover:cursor-pointer text-white"
-                    : "text-gray-900"
+                    : `${theme==="dark" ? "text-white" : "text-gray-900"}`
                 }  px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
               >
                 {index + 1}
