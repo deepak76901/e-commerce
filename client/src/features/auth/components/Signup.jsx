@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { selectLoggedInUser, createUserAsync } from "../authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Signup() {
   const {
@@ -11,7 +11,7 @@ function Signup() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
 
@@ -25,6 +25,8 @@ function Signup() {
         addresses: [],
       })
     );
+    navigate("/login")
+
   };
 
   console.log(errors);
@@ -32,7 +34,7 @@ function Signup() {
   return (
     <>
       {user?.email}
-      {user && <Navigate to="/" replace={true}></Navigate>}
+      {user && <Navigate to="/login" replace={true}></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -65,7 +67,7 @@ function Signup() {
                     required: "username is required",
                   })}
                   type="string"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
                 />
                 {errors.username && (
                   <p className="text-red-500">{errors.username.message}</p>
