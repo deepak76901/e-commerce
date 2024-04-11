@@ -124,7 +124,7 @@ export default function ProductList() {
 
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-baseline justify-between border-b border-gray-200 py-5">
-              <h1 className={`text-4xl font-bold tracking-tight text-gray-800 ${theme ==="dark" &&"text-white bg-gray-700" }`}>
+              <h1 className={`ml-5 sm:ml-0 text-2xl sm:text-4xl font-bold tracking-tight text-gray-800 ${theme ==="dark" &&"text-white bg-gray-700" }`}>
                 All Products
               </h1>
 
@@ -173,11 +173,11 @@ export default function ProductList() {
                   className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
                 >
                   <span className="sr-only">View grid</span>
-                  <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
+                  {/* <Squares2X2Icon className="h-5 w-5" aria-hidden="true" /> */}
                 </button>
                 <button
                   type="button"
-                  className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                  className="-m-2 ml-2 p-2 text-gray-400 hover:text-gray-500 sm:ml-2 lg:hidden"
                   onClick={() => setMobileFiltersOpen(true)}
                 >
                   <span className="sr-only">Filters</span>
@@ -402,11 +402,9 @@ function ProductGrid({ products ,theme}) {
     <>
       <div className={`${theme ==="dark" ? "text-white bg-gray-800" : "bg-white" } `}>
         <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
-          <h2 className={`text-2xl font-bold tracking-tight text-gray-800 ${theme ==="dark" && "text-white"}`}>
-            Customers also purchased
-          </h2>
+          
 
-          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+          <div className=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {products.map((product) => (
               <Link to={`/product-detail/${product.id}`} key={product.id} >
                 <div
