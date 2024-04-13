@@ -13,6 +13,7 @@ export const fetchUserById = async (req, res, next) => {
       email: user.email,
       isAdmin: user.isAdmin,
       addresses: user.addresses,
+      profilePicture:user.profilePicture
     });
   } catch (error) {
     next(error);
@@ -38,8 +39,8 @@ export const updateUser = async (req, res, next) => {
 
 export const createOrder = async (req, res, next) => {
   try {
-    if(!req.body.selectedAddress){
-      return next(errorHandler(400,"Address required"))
+    if (!req.body.selectedAddress) {
+      return next(errorHandler(400, "Address required"));
     }
     const order = new Orders(req.body);
     order.save();
@@ -51,9 +52,28 @@ export const createOrder = async (req, res, next) => {
 
 export const fetchUserOrders = async (req, res, next) => {
   try {
-    const orders = await Orders.find({userId:req.params.userId});
+    const orders = await Orders.find({ userId: req.params.userId });
     res.status(200).json(orders);
   } catch (error) {
     next(error);
   }
+};
+
+export const saveImage = async (req, res, next) => {
+  const {userId} = req.params;
+  const {downloadURL} = req.body;
+ try {
+  const {profilePicture} = await User.findByIdAndUpdate(
+    userId,
+    {
+      $set: {
+        profilePicture: downloadURL,
+      },
+    },
+    { new: true }
+  );
+  res.json(profilePicture)
+ } catch (error) {
+  next(error)
+ }
 };

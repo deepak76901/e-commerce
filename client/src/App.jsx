@@ -38,6 +38,9 @@ function App() {
     }
   }, [user]);
 
+  if(localStorage.getItem("token")){
+  }
+
   return (
     <>
       <BrowserRouter>

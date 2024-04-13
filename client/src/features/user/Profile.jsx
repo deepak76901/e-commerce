@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserInfo, updateUserAsync } from "./userSlice";
+import { saveImageAsync, selectUserInfo, updateUserAsync } from "./userSlice";
 import { useForm } from "react-hook-form";
+import { Button, FileInput } from "flowbite-react";
+import app from "../../firebase.config";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 function Profile() {
   const dispatch = useDispatch();
   const user = useSelector(selectUserInfo);
   const [selectedEditIndex, setSelectedEditIndex] = useState(-1);
   const [showAddAddressForm, setShowAddAddressForm] = useState(false);
+  const [avatar, setAvatar] = useState("");
+  const [imageUploadError, setImageUploadError] = useState(null);
+  const [imageUploadProgress, setImageUploadProgress] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
+  const [changeAvatar, setChangeAvatar] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -44,30 +58,116 @@ function Profile() {
     setShowAddAddressForm(false);
   };
 
+  const handleUploadImage = async () => {
+    try {
+      if (!avatar) {
+        setImageUploadError("Please select an image");
+        return;
+      }
+      setImageUploadError(null);
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + "-" + avatar.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, avatar);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // const progress =
+          //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          // setImageUploadProgress(progress.toFixed(0));
+        },
+        (error) => {
+          setImageUploadProgress(null);
+          setImageUploadError(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setImageUploadProgress(null);
+            setImageUploadError(null);
+            setImageUrl(downloadURL);
+          });
+        }
+      );
+    } catch (error) {
+      setImageUploadError("Image upload failed");
+      setImageUploadProgress(null);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (imageUrl.length > 0) {
+      console.log("Image url", imageUrl);
+      dispatch(saveImageAsync({ downloadURL: imageUrl, userId: user.id }));
+    }
+  }, [imageUrl]);
+
   return (
     <div className="flex justify-center">
       <div className="mt-8 p-4 bg-gray-300 md:max-w-5xl w-full rounded-xl">
-        <h2 className="text-3xl pt-3 pb-3 font-semibold bg-gray-300 pl-3">
-          Name: {user.username ? user.username : "john doe"}
-        </h2>
-        <h3 className="text-red-900 pt-1 pb-1 font-semibold bg-gray-300 pl-3">
-          Email Address: {user.email ? user.email : "johndoe@gmail.com"}
-        </h3>
-        {user.isAdmin && (
-          <h3 className="text-red-900 pt-1 pb-3 font-semibold bg-gray-300 pl-3 text-xl">
-            Admin
-          </h3>
-        )}
-        <button
-          onClick={(e) => {
-            setShowAddAddressForm(true);
-            setSelectedEditIndex(-1);
-          }}
-          type="submit"
-          className="rounded-md mx-3 bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 w-40"
-        >
-          Add New Address
-        </button>
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <div className="">
+            <h2 className="text-3xl pt-3 pb-3 font-semibold bg-gray-300 pl-3">
+              Name: {user.username ? user.username : "john doe"}
+            </h2>
+            <h3 className="text-red-900 pt-1 pb-1 font-semibold bg-gray-300 pl-3">
+              Email Address: {user.email ? user.email : "johndoe@gmail.com"}
+            </h3>
+            {user.isAdmin && (
+              <h3 className="text-red-900 pt-1 pb-3 font-semibold bg-gray-300 pl-3 text-xl">
+                Admin
+              </h3>
+            )}
+            {changeAvatar && (
+              <div className="flex flex-col sm:flex-row gap-3 my-3 ml-3">
+                <FileInput
+                  type="file"
+                  accept="image/*"
+                  id="avatar"
+                  onChange={(e) => setAvatar(e.target.files[0])}
+                  className="w-60"
+                />
+                <Button
+                  color="blue"
+                  size="sm"
+                  className="w-40"
+                  onClick={handleUploadImage}
+                >
+                  Upload Image
+                </Button>
+              </div>
+            )}
+            <Button
+              onClick={(e) => {
+                setShowAddAddressForm(true);
+                setSelectedEditIndex(-1);
+              }}
+              type="submit"
+              color="success"
+              className="ml-3 mb-3"
+              size={"sm"}
+            >
+              Add New Address
+            </Button>
+          </div>
+          <div className="space-y-2 text-center ml-3">
+            <img
+              src={user.profilePicture}
+              className="w-52 h-40 object-cover rounded-xl"
+            />
+            <Button
+              color="success"
+              className="w-40"
+              size="sm"
+              type="button"
+              onClick={() => {
+                changeAvatar ? setChangeAvatar(false) : setChangeAvatar(true);
+              }}
+            >
+              {changeAvatar ? "Cancel" : "Change Avatar"}
+            </Button>
+          </div>
+        </div>
         <div>
           {showAddAddressForm ? (
             <form
@@ -240,7 +340,7 @@ function Profile() {
 
         <div className="mt-8 p-4  border-t border-gray-700 px-4 py-6 sm:px-6">
           {user.addresses.map((address, index) => (
-            <div>
+            <div key={index}>
               {selectedEditIndex === index ? (
                 <form
                   className="bg-gray-300 p-5"

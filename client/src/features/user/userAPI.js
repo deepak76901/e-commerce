@@ -1,8 +1,8 @@
 export const fetchLoggedInUserOrders = async (userId) => {
   const response = await fetch("/user/orders/" + userId);
   const data = await response.json();
-  console.log("Data",data)
-  console.log("Total docs",data.length)
+  console.log("Data", data);
+  console.log("Total docs", data.length);
   return data;
 };
 
@@ -22,4 +22,21 @@ export const updateUser = async (update) => {
   const data = await response.json();
   console.log(data);
   return data;
+};
+
+export const storeImageInDatabase = async ({downloadURL,userId}) => {
+  try {
+    const response = await fetch(`/user/saveImage/${userId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      
+      body: JSON.stringify({downloadURL}),
+    });
+    console.log("Response",response);
+    const data = await response.json();
+    console.log("Data",data)
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
 };

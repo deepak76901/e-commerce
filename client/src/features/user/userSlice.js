@@ -3,6 +3,7 @@ import {
   fetchLoggedInUserOrders,
   fetchLoggedInUser,
   updateUser,
+  storeImageInDatabase,
 } from "./userAPI";
 
 const initialState = {
@@ -37,6 +38,14 @@ export const updateUserAsync = createAsyncThunk(
   }
 );
 
+export const saveImageAsync = createAsyncThunk(
+  "/user/saveImage",
+  async ({ downloadURL, userId }) => {
+    const response = await storeImageInDatabase({ downloadURL, userId });
+    return response;
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -63,6 +72,17 @@ export const userSlice = createSlice({
       .addCase(fetchLoggedInUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.userInfo = action.payload;
+      })
+      .addCase(saveImageAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(saveImageAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.userInfo = { ...state.userInfo, profilePicture: action.payload };
+      })
+      .addCase(saveImageAsync.rejected, (state) => {
+        state.status = "idle";
+        
       });
   },
 });

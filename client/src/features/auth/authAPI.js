@@ -21,9 +21,11 @@ export const checkUser = async (logInInfo) => {
       body: JSON.stringify(logInInfo),
       headers: { "content-type": "application/json" },
     });
-
+    
     if (response.ok) {
       const data = await response.json();
+      console.log(data)
+      localStorage.setItem("token",data.token)
       return data;
     } else {
       const err = await response.json();

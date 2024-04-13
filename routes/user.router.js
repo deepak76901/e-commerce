@@ -3,6 +3,7 @@ import {
   createOrder,
   fetchUserById,
   fetchUserOrders,
+  saveImage,
   updateUser,
 } from "../controllers/user.controller.js";
 
@@ -13,3 +14,4 @@ router
   .patch("/updateUser/:userId", updateUser)
   .post("/createOrder/:userId", createOrder)
   .get("/orders/:userId",fetchUserOrders)
+  .put("/saveImage/:userId",saveImage)
