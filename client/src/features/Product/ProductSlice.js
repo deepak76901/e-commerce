@@ -7,6 +7,8 @@ import {
   fetchProductById,
   createProduct,
   updateProduct,
+  suggestions,
+  fetchSuggestions,
 } from "./ProductAPI";
 
 const initialState = {
@@ -16,7 +18,8 @@ const initialState = {
   status: "idle",
   totalItems: 0,
   selectedProduct: null,
-  createdProduct:null
+  createdProduct:null,
+  suggestions:[]
 };
 
 export const fetchAllProductsAsync = createAsyncThunk(
@@ -72,6 +75,11 @@ export const updateProductAsync = createAsyncThunk(
     return response;
   }
 );
+
+export const fetchSuggestionAsync = createAsyncThunk("/product/suggestions",async (category) => {
+  const response = await fetchSuggestions(category);
+  return response;
+})
 
 export const productSlice = createSlice({
   name: "product",
@@ -141,7 +149,15 @@ export const productSlice = createSlice({
       .addCase(updateProductAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.products.push(action.payload);
-      });
+      })
+      .addCase(fetchSuggestionAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchSuggestionAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.suggestions = action.payload;
+      })
+
   },
 });
 
@@ -152,6 +168,7 @@ export const selectBrands = (state) => state.product.brands;
 export const selectCategories = (state) => state.product.categories;
 export const selectProductById = (state) => state.product.selectedProduct;
 export const selectCreatedProduct = state => state.product.createdProduct;
+export const selectSuggestions = state => state.product.suggestions
 
 export const selectTotalItems = (state) => state.product.totalItems;
 

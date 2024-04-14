@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon, StarIcon } from "@heroicons/react/24/outline";
-import { fetchAllProducts, } from "../ProductAPI";
+import { fetchAllProducts } from "../ProductAPI";
 import {
   selectAllProducts,
   selectTotalItems,
@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../../common/Pagination";
 import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
-
+import { Carousel } from "flowbite-react";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -35,7 +35,6 @@ const sortOptions = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
 
 export default function ProductList() {
   const dispatch = useDispatch();
@@ -107,11 +106,15 @@ export default function ProductList() {
     dispatch(fetchCategoryAsync());
   }, []);
 
-  const {theme} = useSelector(state => state.theme)
+  const { theme } = useSelector((state) => state.theme);
 
   return (
     <div>
-      <div className={`${theme ==="dark" ? "text-white bg-gray-700" : "bg-white" }`}>
+      <div
+        className={`${
+          theme === "dark" ? "text-white bg-gray-700" : "bg-white"
+        } `}
+      >
         <div>
           {/* Mobile filter dialog */}
           <MobileFilter
@@ -121,17 +124,50 @@ export default function ProductList() {
             filters={filters}
             theme={theme}
           ></MobileFilter>
+           <div className="h-56 sm:h-56 lg:flex lg:justify-start w-full ">
+              <Carousel slideInterval={2000} className="w-full rounded-none">
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/fd78c56eb85bafd5.jpg?q=20"
+                  alt="..."
+                />
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/3af219e83718806b.jpg?q=20"
+                  alt="..."
+                />
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/ed4591126ff69acb.png?q=20"
+                  alt="..."
+                />
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/4d946b3cdabec95f.png?q=20"
+                  alt="..."
+                />
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/25e306273d3609bc.jpg?q=20"
+                  alt="..."
+                />
+              </Carousel>
+              {/* <img src="https://img.freepik.com/premium-vector/up-50-off-banner_217752-218.jpg" alt="sale" className="m-10 rounded-xl  invisible lg:visible" /> */}
+            </div>
 
-          <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
             <div className="flex items-baseline justify-between border-b border-gray-200 py-5">
-              <h1 className={`ml-5 sm:ml-0 text-2xl sm:text-4xl font-bold tracking-tight text-gray-800 ${theme ==="dark" &&"text-white bg-gray-700" }`}>
+              <h1
+                className={`ml-5 sm:ml-0 text-2xl sm:text-4xl font-bold tracking-tight text-gray-800 ${
+                  theme === "dark" && "text-white bg-gray-700"
+                }`}
+              >
                 All Products
               </h1>
 
               <div className="flex items-center">
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
-                    <Menu.Button className={`group inline-flex justify-center text-sm font-medium text-gray-700  ${theme ==="dark" && "text-white"}`}>
+                    <Menu.Button
+                      className={`group inline-flex justify-center text-sm font-medium text-gray-700  ${
+                        theme === "dark" && "text-white"
+                      }`}
+                    >
                       Sort
                       <ChevronDownIcon
                         className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -149,14 +185,24 @@ export default function ProductList() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className={`absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md  shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none ${theme === "dark" ? "text-white bg-gray-900 " : "bg-white"}`}>
+                    <Menu.Items
+                      className={`absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md  shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                        theme === "dark"
+                          ? "text-white bg-gray-900 "
+                          : "bg-white"
+                      }`}
+                    >
                       <div className="py-1">
                         {sortOptions.map((option) => (
                           <Menu.Item key={option.name}>
                             {({ active }) => (
                               <p
                                 onClick={(e) => handleSort(e, option)}
-                                className={`font-medium cursor-pointer px-1 py-1 text-center text-sm  ${theme==="dark" ? "text-white bg-gray-700 hover:bg-gray-400" : "text-gray-600 bg-white"}${active && "bg-gray-500"}`}
+                                className={`font-medium cursor-pointer px-1 py-1 text-center text-sm  ${
+                                  theme === "dark"
+                                    ? "text-white bg-gray-700 hover:bg-gray-400"
+                                    : "text-gray-600 bg-white"
+                                }${active && "bg-gray-500"}`}
                               >
                                 {option.name}
                               </p>
@@ -224,13 +270,15 @@ function MobileFilter({
   setMobileFiltersOpen,
   handleFilter,
   filters,
-  theme
+  theme,
 }) {
   return (
     <Transition.Root show={mobileFiltersOpen} as={Fragment}>
       <Dialog
         as="div"
-        className={`relative z-40 lg:hidden ${theme==="dark" && "text-white bg-gray-700"} `}
+        className={`relative z-40 lg:hidden ${
+          theme === "dark" && "text-white bg-gray-700"
+        } `}
         onClose={setMobileFiltersOpen}
       >
         <Transition.Child
@@ -255,12 +303,28 @@ function MobileFilter({
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className={`relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto  py-4 pb-12 shadow-xl ${theme==="dark" ? "bg-gray-700" : "bg-white"}`}>
-              <div className={`flex items-center justify-between px-4  ${theme==="dark" && "text-white bg-gray-700"}`}>
-                <h2 className={`text-lg font-medium text-gray-900 ${theme==="dark" && "text-white"}`}>Filters</h2>
+            <Dialog.Panel
+              className={`relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto  py-4 pb-12 shadow-xl ${
+                theme === "dark" ? "bg-gray-700" : "bg-white"
+              }`}
+            >
+              <div
+                className={`flex items-center justify-between px-4  ${
+                  theme === "dark" && "text-white bg-gray-700"
+                }`}
+              >
+                <h2
+                  className={`text-lg font-medium text-gray-900 ${
+                    theme === "dark" && "text-white"
+                  }`}
+                >
+                  Filters
+                </h2>
                 <button
                   type="button"
-                  className={`-mr-2 flex h-10 w-10 items-center justify-center rounded-md p-2 text-gray-400 ${theme==="dark" ? "bg-gray-700" : "bg-white"}`}
+                  className={`-mr-2 flex h-10 w-10 items-center justify-center rounded-md p-2 text-gray-400 ${
+                    theme === "dark" ? "bg-gray-700" : "bg-white"
+                  }`}
                   onClick={() => setMobileFiltersOpen(false)}
                 >
                   <span className="sr-only">Close menu</span>
@@ -269,7 +333,13 @@ function MobileFilter({
               </div>
 
               {/* Filters */}
-              <form className={`mt-4 border-t ${theme ==="dark" ? "text-white bg-gray-700 hover:text-gray-100" : "border-gray-200"}`}>
+              <form
+                className={`mt-4 border-t ${
+                  theme === "dark"
+                    ? "text-white bg-gray-700 hover:text-gray-100"
+                    : "border-gray-200"
+                }`}
+              >
                 {filters.map((section) => (
                   <Disclosure
                     as="div"
@@ -279,8 +349,19 @@ function MobileFilter({
                     {({ open }) => (
                       <>
                         <h3 className="-mx-2 -my-3 flow-root">
-                          <Disclosure.Button className={`flex w-full items-center justify-between  px-2 py-3 text-gray-400 hover:text-gray-500 ${theme ==="dark" ? "bg-gray-700 hover:text-gray-100" : "bg-white" }`}>
-                            <span className={`font-medium text-gray-900 ${theme ==="dark" && "bg-gray-700 text-white hover:text-gray-100" }`}>
+                          <Disclosure.Button
+                            className={`flex w-full items-center justify-between  px-2 py-3 text-gray-400 hover:text-gray-500 ${
+                              theme === "dark"
+                                ? "bg-gray-700 hover:text-gray-100"
+                                : "bg-white"
+                            }`}
+                          >
+                            <span
+                              className={`font-medium text-gray-900 ${
+                                theme === "dark" &&
+                                "bg-gray-700 text-white hover:text-gray-100"
+                              }`}
+                            >
                               {section.name}
                             </span>
                             <span className="ml-6 flex items-center">
@@ -318,7 +399,11 @@ function MobileFilter({
                                 />
                                 <label
                                   htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                  className={`ml-3 min-w-0 flex-1 ${theme==="dark"?"text-white bg-gray-700":"text-gray-500"} `}
+                                  className={`ml-3 min-w-0 flex-1 ${
+                                    theme === "dark"
+                                      ? "text-white bg-gray-700"
+                                      : "text-gray-500"
+                                  } `}
                                 >
                                   {option.label}
                                 </label>
@@ -352,11 +437,27 @@ function DesktopFilter({ handleFilter, filters, theme }) {
             {({ open }) => (
               <>
                 <h3 className="-my-3 flow-root">
-                  <Disclosure.Button className={`flex w-full items-center justify-between  py-3 text-sm  hover:text-gray-500 ${theme === "dark"? "text-white bg-gray-700":"text-gray-400 bg-white"}`}>
-                    <span className={`font-medium  ${theme ==="dark" ? "text-white bg-gray-700" : "text-gray-900"}`}>
+                  <Disclosure.Button
+                    className={`flex w-full items-center justify-between  py-3 text-sm  hover:text-gray-500 ${
+                      theme === "dark"
+                        ? "text-white bg-gray-700"
+                        : "text-gray-400 bg-white"
+                    }`}
+                  >
+                    <span
+                      className={`font-medium  ${
+                        theme === "dark"
+                          ? "text-white bg-gray-700"
+                          : "text-gray-900"
+                      }`}
+                    >
                       {section.name}
                     </span>
-                    <span className={`ml-6 flex items-center ${theme ==="dark" ? "dark-theme hover:text-gray-100" : ""}`}>
+                    <span
+                      className={`ml-6 flex items-center ${
+                        theme === "dark" ? "dark-theme hover:text-gray-100" : ""
+                      }`}
+                    >
                       {open ? (
                         <MinusIcon className="h-5 w-5" aria-hidden="true" />
                       ) : (
@@ -368,7 +469,14 @@ function DesktopFilter({ handleFilter, filters, theme }) {
                 <Disclosure.Panel className="pt-6">
                   <div className="space-y-4">
                     {section.options.map((option, optionIdx) => (
-                      <div key={option.value} className={`flex items-center ${theme ==="dark" ? "dark-theme hover:text-gray-100" : ""}`}>
+                      <div
+                        key={option.value}
+                        className={`flex items-center ${
+                          theme === "dark"
+                            ? "dark-theme hover:text-gray-100"
+                            : ""
+                        }`}
+                      >
                         <input
                           id={`filter-${section.id}-${optionIdx}`}
                           name={`${section.id}[]`}
@@ -380,7 +488,9 @@ function DesktopFilter({ handleFilter, filters, theme }) {
                         />
                         <label
                           htmlFor={`filter-${section.id}-${optionIdx}`}
-                          className={`ml-3 text-sm ${theme==="dark"?"text-white" : "text-gray-600"} `}
+                          className={`ml-3 text-sm ${
+                            theme === "dark" ? "text-white" : "text-gray-600"
+                          } `}
                         >
                           {option.label}
                         </label>
@@ -397,18 +507,22 @@ function DesktopFilter({ handleFilter, filters, theme }) {
   );
 }
 
-function ProductGrid({ products ,theme}) {
+function ProductGrid({ products, theme }) {
   return (
     <>
-      <div className={`${theme ==="dark" ? "text-white bg-gray-800" : "bg-white" } `}>
+      <div
+        className={`${
+          theme === "dark" ? "text-white bg-gray-800" : "bg-white"
+        } `}
+      >
         <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
-          
-
           <div className=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {products.map((product) => (
-              <Link to={`/product-detail/${product.id}`} key={product.id} >
+              <Link to={`/product-detail/${product.id}`} key={product.id}>
                 <div
-                  className={`group relative border-solid border-2 rounded-lg  p-2 ${theme === "dark" ? "border-gray-300" : "border-gray-500"} `}
+                  className={`group relative border-solid border-2 rounded-lg  p-2 ${
+                    theme === "dark" ? "border-gray-300" : "border-gray-500"
+                  } `}
                 >
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
                     <img
@@ -419,7 +533,13 @@ function ProductGrid({ products ,theme}) {
                   </div>
                   <div className="mt-4 flex justify-between">
                     <div>
-                      <h3 className={`text-sm text-gray-700 ${theme ==="dark" ? "dark-theme hover:text-gray-100" : ""}`}>
+                      <h3
+                        className={`text-sm text-gray-700 ${
+                          theme === "dark"
+                            ? "dark-theme hover:text-gray-100"
+                            : ""
+                        }`}
+                      >
                         <div href={product.href}>
                           <span
                             aria-hidden="true"
@@ -428,16 +548,32 @@ function ProductGrid({ products ,theme}) {
                           {product.title}
                         </div>
                       </h3>
-                      <p className={`mt-1 text-sm text-gray-500 ${theme ==="dark" ? "dark-theme hover:text-gray-100" : ""}`}>
+                      <p
+                        className={`mt-1 text-sm text-gray-500 ${
+                          theme === "dark"
+                            ? "dark-theme hover:text-gray-100"
+                            : ""
+                        }`}
+                      >
                         <StarIcon className="w-6 h-6 inline "></StarIcon>
                         {product.rating}
                       </p>
                     </div>
                     <div>
-                      <p className={`text-sm font-medium text-gray-900 ${theme ==="dark" ? "dark-theme hover:text-gray-100" : ""} `}>
+                      <p
+                        className={`text-sm font-medium text-gray-900 ${
+                          theme === "dark"
+                            ? "dark-theme hover:text-gray-100"
+                            : ""
+                        } `}
+                      >
                         ${discountedPrice(product)}
                       </p>
-                      <p className={`text-sm font-medium text-gray-500 line-through ${theme ==="dark" ? "strik  hover:text-gray-100" : ""}`}>
+                      <p
+                        className={`text-sm font-medium text-gray-500 line-through ${
+                          theme === "dark" ? "strik  hover:text-gray-100" : ""
+                        }`}
+                      >
                         ${product.price}
                       </p>
                     </div>

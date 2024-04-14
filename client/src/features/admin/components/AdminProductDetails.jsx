@@ -153,7 +153,7 @@ export default function AdminProductDetails() {
 
               <div className="mt-10">
                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam a animi odio impedit numquam quasi necessitatibus, harum vel asperiores quaerat provident magnam maxime similique voluptatibus voluptates odit laboriosam ducimus eum illum deleniti cum. Rerum in facilis cum alias perspiciatis cupiditate tenetur similique est voluptas odit, maiores aliquam repudiandae vitae blanditiis?</p>
                 <div className="mt-4 space-y-6">
                   <p className="text-sm text-gray-600">{product.details}</p>
                 </div>

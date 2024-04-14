@@ -85,6 +85,7 @@ function Profile() {
             setImageUploadProgress(null);
             setImageUploadError(null);
             setImageUrl(downloadURL);
+            setChangeAvatar(false)
           });
         }
       );

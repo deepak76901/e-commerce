@@ -12,6 +12,9 @@ import { selectItems } from "../cart/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedInUser } from "../auth/authSlice";
 import {toggleTheme} from "../Theme/ThemeSlice"
+import { IoSearchOutline } from "react-icons/io5";
+import { TextInput } from "flowbite-react";
+
 
 const navigation = [
   { name: "Products", link: "/", isAdmin: false },
@@ -31,7 +34,7 @@ function Navbar({ children }) {
 
   return (
     
-      <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-30">
+      <Disclosure as="nav" className="bg-gray-100 sticky top-0 z-30">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -53,13 +56,13 @@ function Navbar({ children }) {
                     <Link to="/">
                       <img
                         className="h-10 w-auto rounded-full"
-                        src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-correct-icon-png-image_4602219.jpg"
+                        src="https://logos-world.net/wp-content/uploads/2020/11/Flipkart-Emblem.png"
                         alt="Your Company"
                       />
                     </Link>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
-                    <div className="flex space-x-4">
+                    <div className="flex space-x-2">
                       {navigation.map((item) =>
                         item.isAdmin === user.isAdmin ? (
                           <Link
@@ -68,8 +71,8 @@ function Navbar({ children }) {
                             className={classNames(
                               item.current
                                 ? "bg-gray-900 text-white"
-                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                              "rounded-md px-3 py-2 text-sm font-medium"
+                                : "text-gray-700  hover:text-gray-900",
+                              "rounded-md px-2 py-2 text-base font-semibold"
                             )}
                             aria-current={item.current ? "page" : undefined}
                           >
@@ -79,20 +82,21 @@ function Navbar({ children }) {
                       )}
                     </div>
                   </div>
+                  <TextInput icon={IoSearchOutline} size="sm" type="text" id="search" className="ml-5  w-80 mt-1 text-xl" placeholder="Search for Products,Brands and More" color="blue" />
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button className="mx-2" onClick={() => {dispatch(toggleTheme())}}>
+                  {/* <button className="mx-2" onClick={() => {dispatch(toggleTheme())}}>
                     {theme === "light" ? (
                       <IoMoonOutline className="text-gray-400 h-6 w-auto cursor-pointer hover:text-white" />
                     ) : (
                       <IoSunnyOutline className="text-gray-200 h-6 w-auto cursor-pointer" />
                     )}
-                  </button>
+                  </button> */}
                   {/* Shopping Cart Icon */}
                   <Link to="/cart">
                     <button
                       type="button"
-                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      className="relative rounded-full  p-1 text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                     >
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">View notifications</span>
@@ -103,7 +107,7 @@ function Navbar({ children }) {
                     </button>
                   </Link>
                   {items.length > 0 && (
-                    <span className="inline-flex items-center rounded-md  mb-5   bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                    <span className="inline-flex items-center rounded-md  mb-5   bg-gray-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-500">
                       {items.length}
                     </span>
                   )}

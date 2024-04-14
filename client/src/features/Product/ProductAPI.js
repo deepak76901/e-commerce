@@ -69,3 +69,11 @@ export const fetchBrands = async () => {
   const data = await response.json();
   return data;
 };
+
+export const fetchSuggestions = async (category) => {
+  const response = await fetch(`/products/suggestion/${category}`,)
+  if(response.ok){
+    const data = await response.json()
+    return data;
+  }
+}

@@ -96,3 +96,13 @@ export const updateProduct = async (req, res, next) => {
     next(error);
   }
 };
+
+export const fetchSuggestion = async (req, res, next) => {
+  try {
+    const {category} = req.params;
+    const data = await Product.find({category}).limit(5)
+    res.status(200).json(data)
+  } catch (error) {
+    next(error)
+  }
+}

@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { ITEMS_PER_PAGE } from "../../../app/constants";
+import { Carousel } from "flowbite-react";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -118,6 +119,31 @@ export default function AdminProductList() {
             handleFilter={handleFilter}
             filters={filters}
           ></MobileFilter>
+           <div className="h-56 sm:h-56 lg:flex lg:justify-start w-full ">
+              <Carousel slideInterval={2000} className="w-full rounded-none">
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/fd78c56eb85bafd5.jpg?q=20"
+                  alt="..."
+                />
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/3af219e83718806b.jpg?q=20"
+                  alt="..."
+                />
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/ed4591126ff69acb.png?q=20"
+                  alt="..."
+                />
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/4d946b3cdabec95f.png?q=20"
+                  alt="..."
+                />
+                <img
+                  src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/25e306273d3609bc.jpg?q=20"
+                  alt="..."
+                />
+              </Carousel>
+              {/* <img src="https://img.freepik.com/premium-vector/up-50-off-banner_217752-218.jpg" alt="sale" className="m-10 rounded-xl  invisible lg:visible" /> */}
+            </div>
 
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-baseline justify-between border-b border-gray-200 py-5">
@@ -407,10 +433,7 @@ function ProductGrid({ products }) {
     <>
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Customers also purchased
-          </h2>
-
+          
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {products.map((product) => (
               <div key={product.id}>
