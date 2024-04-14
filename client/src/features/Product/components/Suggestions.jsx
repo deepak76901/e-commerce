@@ -17,17 +17,22 @@ export default function Suggestions({ category }) {
       {data.length > 0 &&
         data.map((product) => (
           <div className="border-2 border-gray-600 h-60 w-52 group">
-            <Link to={`/product-detail/${product.id}`}>
-              <img
-                src={product.thumbnail}
-                className="h-40 object-cover group-hover:cursor-pointer"
-              />
-            </Link>
-            <div className=" px-2  group-hover:cursor-pointer space-y-1 ">
+            <div className="h-40">
+              <Link to={`/product-detail/${product.id}`}>
+                <img
+                  src={product.thumbnail}
+                  className="h-40 w-full object-cover group-hover:cursor-pointer mx-auto"
+                />
+              </Link>
+            </div>
+            <div className="px-2 group-hover:cursor-pointer space-y-1">
               <p className="hover:underline line-clamp-1 ">{product.title}</p>
               <div className="flex items-center text-sm mt-2 bg-[#4d8c1d] text-white h-5 w-14 rounded-md pl-1">
-                  <span >{product.rating}</span><svg className="h-4"><StarIcon/></svg>
-                </div>
+                <span>{product.rating}</span>
+                <svg className="h-4">
+                  <StarIcon />
+                </svg>
+              </div>
               <div className="space-x-2">
                 <span className="text-gray-900 font-semibold">
                   ${discountedPrice(product)}

@@ -9,6 +9,7 @@ import { discountedPrice } from "../../../app/constants";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { selectUserInfo } from "../../user/userSlice";
 import Suggestions from "./Suggestions";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -49,6 +50,8 @@ export default function ProductDetails() {
     dispatch(fetchProductByIdAsync(params.id));
   }, [dispatch, params.id]);
 
+  const [index, setIndex] = useState(0);
+
   return (
     <div className="bg-white">
       {product && (
@@ -56,11 +59,25 @@ export default function ProductDetails() {
           <div className="pt-4  flex flex-col md:flex-row">
             {/* Image gallery */}
             <div className=" mt-4 md:w-[350px] md:h-[450px] mx-10">
-              <img
-                src={product.images[0]}
-                alt={product.title}
-                className="h-full w- object-contain object-center"
-              />
+              <div className="relative">
+                <button
+                  className="absolute top-2/4 left-0 bg-gray-200/70 py-1 px-1 text-xl"
+                  onClick={() => {index>0 && setIndex(index - 1)}}
+                >
+                  <FaAngleLeft/>
+                </button>
+                <button
+                  className="absolute top-2/4 right-0 bg-gray-200/70 py-1 px-1 text-xl"
+                  onClick={() => {index<3 && setIndex(index + 1)}}
+                >
+                  <FaAngleRight/>
+                </button>
+                <img
+                  src={product.images[index]}
+                  alt={product.title}
+                  className="h-[400px] w-full object-contain object-center"
+                />
+              </div>
               <form className="mt-3">
                 <button
                   type="submit"
@@ -70,29 +87,6 @@ export default function ProductDetails() {
                   Add to cart
                 </button>
               </form>
-              {/* <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-           <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-             <img
-               src={product.images[1]}
-               alt={product.title}
-               className="h-full w-full object-cover object-center"
-             />
-           </div>
-           <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-             <img
-               src={product.images[2]}
-               alt={product.title}
-               className="h-full w-full object-cover object-center"
-             />
-           </div>
-         </div>
-         <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-           <img
-             src={product.images[3]}
-             alt={product.title}
-             className="h-full w-full object-cover object-center"
-           />
-         </div> */}
             </div>
 
             {/* Product info */}
@@ -109,7 +103,10 @@ export default function ProductDetails() {
                 </p>
                 {/* Reviews */}
                 <div className="flex items-center mt-2 bg-[#4d8c1d] text-white h-7 w-16 rounded-md px-1">
-                  <span >{product.rating}</span><svg className="h-4"><StarIcon/></svg>
+                  <span>{product.rating}</span>
+                  <svg className="h-4">
+                    <StarIcon />
+                  </svg>
                 </div>
               </div>
 
