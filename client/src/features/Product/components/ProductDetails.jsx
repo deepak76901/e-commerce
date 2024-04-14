@@ -90,7 +90,7 @@ export default function ProductDetails() {
             </div>
 
             {/* Product info */}
-            <div className="ml-24  ">
+            <div className="md:ml-24 p-3  ">
               <div className="">
                 <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                   {product.title}
