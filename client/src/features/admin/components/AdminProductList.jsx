@@ -119,7 +119,7 @@ export default function AdminProductList() {
             handleFilter={handleFilter}
             filters={filters}
           ></MobileFilter>
-           <div className="h-56 sm:h-56 lg:flex lg:justify-start w-full ">
+           <div className="h-56 sm:h-56 lg:flex lg:justify-start w-full hidden md:block ">
               <Carousel slideInterval={2000} className="w-full rounded-none">
                 <img
                   src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/fd78c56eb85bafd5.jpg?q=20"
@@ -198,13 +198,6 @@ export default function AdminProductList() {
                   </Transition>
                 </Menu>
 
-                <button
-                  type="button"
-                  className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-                >
-                  <span className="sr-only">View grid</span>
-                  <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-                </button>
                 <button
                   type="button"
                   className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"

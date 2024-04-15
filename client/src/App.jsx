@@ -26,6 +26,7 @@ import AddProductPage from "./pages/AddProductPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import ScrollToTop from "./app/ScrollToTop";
 import Navbar from "./features/Navbar/Navbar";
+import Footer from "./features/Navbar/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ function App() {
               <Protected>
                 <Navbar />
                 <Home />
+                <Footer/>
               </Protected>
             }
           />
@@ -61,6 +63,7 @@ function App() {
               <ProtectedAdmin>
                 <Navbar />
                 <AdminHome />
+                <Footer/>
               </ProtectedAdmin>
             }
           />
@@ -74,6 +77,7 @@ function App() {
               <>
                 <Navbar />
                 <PageNotFound />
+                <Footer/>
               </>
             }
           />
@@ -83,6 +87,7 @@ function App() {
               <Protected>
                 <Navbar />
                 <CartPage />
+                <Footer/>
               </Protected>
             }
           />
@@ -92,6 +97,7 @@ function App() {
               <Protected>
                 <Navbar />
                 <Checkout />
+                <Footer/>
               </Protected>
             }
           />
@@ -101,6 +107,7 @@ function App() {
               <Protected>
                 <Navbar />
                 <ProductDetailsPage />
+                <Footer/>
               </Protected>
             }
           />
@@ -110,6 +117,7 @@ function App() {
               <Protected>
                 <Navbar />
                 <UserProfilePage />
+                <Footer/>
               </Protected>
             }
           />
@@ -119,6 +127,7 @@ function App() {
               <Protected>
                 <Navbar />
                 <UserOrderPage />
+                <Footer/>
               </Protected>
             }
           />
@@ -128,6 +137,7 @@ function App() {
               <Protected>
                 <Navbar />
                 <OrderSuccessPage />
+                <Footer/>
               </Protected>
             }
           />
@@ -137,6 +147,7 @@ function App() {
               <ProtectedAdmin>
                 <Navbar />
                 <AdminProductDetailsPage />
+                <Footer/>
               </ProtectedAdmin>
             }
           />
@@ -146,6 +157,7 @@ function App() {
               <ProtectedAdmin>
                 <Navbar />
                 <AddProductPage />
+                <Footer/>
               </ProtectedAdmin>
             }
           />
@@ -155,6 +167,7 @@ function App() {
               <ProtectedAdmin>
                 <Navbar />
                 <AddProductPage />
+                <Footer/>
               </ProtectedAdmin>
             }
           />
@@ -165,6 +178,7 @@ function App() {
               <ProtectedAdmin>
                 <Navbar />
                 <AdminOrdersPage />
+                <Footer/>
               </ProtectedAdmin>
             }
           />

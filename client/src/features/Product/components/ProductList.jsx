@@ -124,7 +124,7 @@ export default function ProductList() {
             filters={filters}
             theme={theme}
           ></MobileFilter>
-           <div className="h-56 sm:h-56 lg:flex lg:justify-start w-full ">
+           <div className="h-56 sm:h-56 lg:flex lg:justify-start w-full hidden md:block ">
               <Carousel slideInterval={2000} className="w-full rounded-none">
                 <img
                   src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/fd78c56eb85bafd5.jpg?q=20"

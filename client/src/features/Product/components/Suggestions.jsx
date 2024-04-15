@@ -13,11 +13,11 @@ export default function Suggestions({ category }) {
   const data = useSelector(selectSuggestions);
 
   return (
-    <div className="flex flex-wrap gap-4 pb-5 justify-around px-6">
+    <div className="flex pb-5 gap-4 md:justify-around px-10  overflow-x-auto">
       {data.length > 0 &&
         data.map((product) => (
-          <div className="border-2 border-gray-600 h-60 w-52 group">
-            <div className="h-40">
+          <div className="border-2 border-gray-600 h-60 w-52  group">
+            <div className="h-40 w-40">
               <Link to={`/product-detail/${product.id}`}>
                 <img
                   src={product.thumbnail}

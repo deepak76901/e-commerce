@@ -56,7 +56,7 @@ export default function ProductDetails() {
     <div className="bg-white">
       {product && (
         <div>
-          <div className="pt-4  flex flex-col md:flex-row">
+          <div className="pt-4  flex flex-col md:flex-row w-full">
             {/* Image gallery */}
             <div className=" mt-4 md:w-[350px] md:h-[450px] mx-10">
               <div className="relative">
@@ -90,8 +90,8 @@ export default function ProductDetails() {
             </div>
 
             {/* Product info */}
-            <div className="md:ml-24 p-3  ">
-              <div className="">
+            <div className="md:ml-24 py-3 px-3 scroll-auto overflow-auto">
+              <div className="px-5">
                 <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                   {product.title}
                 </h1>
@@ -112,13 +112,13 @@ export default function ProductDetails() {
 
               {/**Details */}
 
-              <div className="py-10 lg:col-span-2">
+              <div className="py-10 px-3 lg:col-span-2">
                 {/* Description and details */}
                 <div>
                   <h3 className="sr-only">Description</h3>
 
                   <div className="space-y-6 max-w-xl">
-                    <p className="text-base text-gray-900">
+                    <p className="text-sm md:text-base text-gray-900">
                       {product.description}
                     </p>
                   </div>
@@ -128,7 +128,7 @@ export default function ProductDetails() {
                   <h3 className="text-base font-medium text-gray-900">
                     Highlights
                   </h3>
-                  <p className="text-base">
+                  <p className="text-sm md:text-base">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                     Neque nobis minus natus accusantium tempora amet aperiam
                     dolores iure. Reprehenderit perferendis accusamus
@@ -140,14 +140,11 @@ export default function ProductDetails() {
                   <h2 className="text-base font-medium text-gray-900">
                     Details
                   </h2>
-                  <p className="text-base">
+                  <p className="text-sm md:text-base">
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                     Laborum vel soluta et quidem, explicabo maxime quis nobis
                     illum iste quia recusandae reiciendis asperiores magni ullam
-                    ducimus nemo ab non nam minima odio qui? Dignissimos illum
-                    omnis asperiores reiciendis sequi, eveniet maiores.
-                    Blanditiis dignissimos quaerat perspiciatis. Accusantium,
-                    quod nihil! Facere, vitae?
+                    ducimus nemo ab non nam minima odio qui?
                   </p>
                   <div className="mt-4 space-y-6">
                     <p className="text-sm text-gray-600">{product.details}</p>
