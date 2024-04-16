@@ -54,7 +54,7 @@ function Navbar({ children }) {
                 <div className="flex flex-shrink-0 items-center">
                   <Link to="/">
                     <img
-                      className="h-10 w-auto rounded-full"
+                      className="h-8 ml-2 w-auto sm:h-10 rounded-full"
                       src="https://logos-world.net/wp-content/uploads/2020/11/Flipkart-Emblem.png"
                       alt="Your Company"
                     />
