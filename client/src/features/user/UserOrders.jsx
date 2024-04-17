@@ -31,7 +31,7 @@ function UserOrders() {
           key={index}
         >
           <div className="p-4 bg-gray-300 rounded-xl">
-            <h2 className="text-3xl pt-3 pb-3 font-semibold bg-gray-300 pl-3">
+            <h2 className="text-lg sm:text-3xl pt-3 pb-3 font-semibold bg-gray-300 pl-3">
               Order Id #{order._id}
             </h2>
             <h2 className="text-red-900 pt-3 pb-3 font-semibold bg-gray-300 pl-3">

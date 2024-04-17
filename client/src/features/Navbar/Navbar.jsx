@@ -88,7 +88,7 @@ function Navbar({ children }) {
                   size="sm"
                   type="text"
                   id="search"
-                  className="ml-5  w-80 mt-1 text-xl hidden md:block"
+                  className="ml-5 w-80 mt-1 text-xl hidden md:block"
                   placeholder="Search for Products,Brands and More"
                   color="blue"
                 />
