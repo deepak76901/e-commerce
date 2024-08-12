@@ -24,9 +24,6 @@ console.log(__dirname);
 app.use(express.json());
 app.use(
   cors({
-    origin:["https://e-commerce-client-12.vercel.app"],
-    methods:["GET","POST","PUT","PATCH","DELETE"],
-    credentials:true,
     exposedHeaders: ["X-Total-Count"],
   })
 );
@@ -41,9 +38,9 @@ app.listen(
   console.log("Server is listening on PORT : " + process.env.PORT)
 );
 
-app.get("/", (_,res) => {
-  res.send("Hello World")
-})
+app.get("/", (_, res) => {
+  res.send("Hello World");
+});
 
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
