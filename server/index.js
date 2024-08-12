@@ -41,6 +41,10 @@ app.listen(
   console.log("Server is listening on PORT : " + process.env.PORT)
 );
 
+app.get("/", (_,res) => {
+  res.send("Hello World")
+})
+
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 app.use("/brands", brandRouter);
@@ -49,7 +53,7 @@ app.use("/user", userRouter);
 app.use("/cart", cartRouter);
 app.use("/orders", orderRouter);
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+// app.use(express.static(path.join(__dirname, "/client/build")));
 
 // app.get("*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
