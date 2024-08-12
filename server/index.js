@@ -24,6 +24,9 @@ console.log(__dirname);
 app.use(express.json());
 app.use(
   cors({
+    origin:["https://e-commerce-client-12.vercel.app"],
+    methods:["GET","POST","PUT","PATCH","DELETE"],
+    credentials:true,
     exposedHeaders: ["X-Total-Count"],
   })
 );
