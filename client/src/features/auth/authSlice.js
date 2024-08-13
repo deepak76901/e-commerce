@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import { checkUser, createUser, logOut } from "./authAPI";
 import { updateUser } from "../user/userAPI";
 

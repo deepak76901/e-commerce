@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveImageAsync, selectUserInfo, updateUserAsync } from "./userSlice";
 import { useForm } from "react-hook-form";
 import { Button, FileInput } from "flowbite-react";
-import app from "../../firebase.config";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+// import app from "../../firebase.config";
+// import {
+//   getDownloadURL,
+//   getStorage,
+//   ref,
+//   uploadBytesResumable,
+// } from "firebase/storage";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -19,8 +19,8 @@ function Profile() {
   const [avatar, setAvatar] = useState("");
   const [imageUploadError, setImageUploadError] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
-  const [imageUrl, setImageUrl] = useState("");
-  const [changeAvatar, setChangeAvatar] = useState(false);
+  // const [imageUrl, setImageUrl] = useState("");
+  // const [changeAvatar, setChangeAvatar] = useState(false);
 
   const {
     register,
@@ -119,7 +119,7 @@ function Profile() {
                 Admin
               </h3>
             )}
-            {changeAvatar && (
+            {/* {changeAvatar && (
               <div className="flex flex-col sm:flex-row gap-3 my-3 ml-3">
                 <FileInput
                   type="file"
@@ -137,7 +137,7 @@ function Profile() {
                   Upload Image
                 </Button>
               </div>
-            )}
+            )} */}
             <Button
               onClick={(e) => {
                 setShowAddAddressForm(true);
@@ -151,7 +151,7 @@ function Profile() {
               Add New Address
             </Button>
           </div>
-          <div className="space-y-2 text-center ml-3">
+          {/* <div className="space-y-2 text-center ml-3">
             <img
               src={user.profilePicture}
               className="w-52 h-40 object-cover rounded-xl"
@@ -167,7 +167,7 @@ function Profile() {
             >
               {changeAvatar ? "Cancel" : "Change Avatar"}
             </Button>
-          </div>
+          </div> */}
         </div>
         <div>
           {showAddAddressForm ? (

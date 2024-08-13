@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice,} from "@reduxjs/toolkit";
 import {
   fetchAllProducts,
   fetchProductsByFilter,
@@ -7,7 +7,6 @@ import {
   fetchProductById,
   createProduct,
   updateProduct,
-  suggestions,
   fetchSuggestions,
 } from "./ProductAPI";
 

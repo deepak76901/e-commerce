@@ -5,7 +5,7 @@ import Navbar from '../features/Navbar/Navbar'
 export default function UserProfilePage() {
   return (
     <div>
-      <Profile/>
+      {/* <Profile/> */}
     </div>
   )
 }

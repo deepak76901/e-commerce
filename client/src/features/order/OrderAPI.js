@@ -1,5 +1,5 @@
 export const createOrder = async (order) => {
-  const response = await fetch("/user/createOrder/"+order.userId, {
+  const response = await fetch("/api/user/createOrder/"+order.userId, {
     method: "POST",
     body: JSON.stringify(order),
     headers: { "Content-type": "application/json" },
@@ -9,7 +9,7 @@ export const createOrder = async (order) => {
 };
 
 export const updateOrder = async (order) => {
-  const response = await fetch("/orders/update/" + order._id, {
+  const response = await fetch("/api/orders/update/" + order._id, {
     method: "PATCH",
     body: JSON.stringify(order),
     headers: { "Content-type": "application/json" },
@@ -27,7 +27,7 @@ export const fetchAllOrders = async ({sort, pagination}) => {
     queryString += `${key}=${pagination[key]}&`;
   }
   console.log("Query String",queryString)
-  const response = await fetch("/orders/fetchAll?" + queryString);
+  const response = await fetch("/api/orders/fetchAll?" + queryString);
   const data = await response.json();
   const totalOrders = response.headers.get("X-Total-Count");
   return { orders: data, totalOrders: +totalOrders };
