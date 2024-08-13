@@ -1,5 +1,5 @@
 export const addToCart = async (item) => {
-  const response = await fetch("/api/cart/addToCart", {
+  const response = await fetch("/cart/addToCart", {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify(item),
@@ -9,14 +9,14 @@ export const addToCart = async (item) => {
 };
 
 export const fetchItemsByUserId = async (userId) => {
-  const response = await fetch("/api/cart/" + userId);
+  const response = await fetch("/cart/" + userId);
   const data = await response.json();
   console.log(data)
   return data;
 };
 
 export const updateCart = async (update) => {
-  const response = await fetch("/api/cart/" + update.id, {
+  const response = await fetch("/cart/" + update.id, {
     method: "PATCH",
     body: JSON.stringify(update),
     headers: { "Content-type": "application/json" },
@@ -26,7 +26,7 @@ export const updateCart = async (update) => {
 };
 
 export const deleteItemFromCart = async (itemId) => {
-  const response = await fetch("/api/cart/deleteItem/" + itemId, {
+  const response = await fetch("/cart/deleteItem/" + itemId, {
     method: "DELETE",
     headers: { "Content-type": "application/json" },
   });

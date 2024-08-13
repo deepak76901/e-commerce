@@ -1,6 +1,6 @@
 export const createUser = async (userData) => {
   try {
-    const response = await fetch("/api/auth/signup", {
+    const response = await fetch("/auth/signup", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-type": "application/json" },
@@ -16,7 +16,7 @@ export const checkUser = async (logInInfo) => {
   try {
     const email = logInInfo.email;
     const password = logInInfo.password;
-    const response = await fetch("/api/auth/signin", {
+    const response = await fetch("/auth/signin", {
       method: "POST",
       body: JSON.stringify(logInInfo),
       headers: { "content-type": "application/json" },
