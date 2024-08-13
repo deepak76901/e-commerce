@@ -1,31 +1,41 @@
 export const fetchAllProducts = async () => {
-  const response = await fetch("/api/products/getAllProducts");
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/getAllProducts`
+  );
   const data = await response.json();
   return data;
 };
 
 export const fetchProductById = async (id) => {
-  const response = await fetch("/api/products/" + id);
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/` + id
+  );
   const data = await response.json();
   return data;
 };
 
 export const createProduct = async (product) => {
-  const response = await fetch("/api/products/create", {
-    method: "POST",
-    body: JSON.stringify(product),
-    headers: { "Content-type": "application/json" },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/create`,
+    {
+      method: "POST",
+      body: JSON.stringify(product),
+      headers: { "Content-type": "application/json" },
+    }
+  );
   const data = await response.json();
   return data;
 };
 
-export const updateProduct = async ({id,product}) => {
-  const response = await fetch("/api/products/update/"+id, {
-    method: "PATCH",
-    body: JSON.stringify(product),
-    headers: { "Content-type": "application/json" },
-  });
+export const updateProduct = async ({ id, product }) => {
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/update/` + id,
+    {
+      method: "PATCH",
+      body: JSON.stringify(product),
+      headers: { "Content-type": "application/json" },
+    }
+  );
   const data = await response.json();
   return data;
 };
@@ -53,27 +63,36 @@ export const fetchProductsByFilter = async (filter, sort, pagination) => {
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
-  const response = await fetch("/api/products/getAllProducts?" + queryString);
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/getAllProducts?` +
+      queryString
+  );
   const data = await response.json();
   const totalItems = await response.headers.get("X-Total-Count");
   return { products: data, totalItems: +totalItems };
 };
 
 export const fetchCategories = async () => {
-  const response = await fetch("/api/categories");
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/categories`
+  );
   const data = await response.json();
   return data;
 };
 export const fetchBrands = async () => {
-  const response = await fetch("/api/brands");
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/brands`
+  );
   const data = await response.json();
   return data;
 };
 
 export const fetchSuggestions = async (category) => {
-  const response = await fetch(`/api/products/suggestion/${category}`,)
-  if(response.ok){
-    const data = await response.json()
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/suggestion/${category}`
+  );
+  if (response.ok) {
+    const data = await response.json();
     return data;
   }
-}
+};
