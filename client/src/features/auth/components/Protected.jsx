@@ -7,7 +7,7 @@ function Protected({ children }) {
   const user = useSelector(selectLoggedInUser);
 
   if (!user) {
-    return <Navigate to="/product-detail/1" replace={true}></Navigate>;
+    return <Navigate to="/login" replace={true}></Navigate>;
   }
   return children;
 }
