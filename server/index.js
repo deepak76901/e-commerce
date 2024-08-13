@@ -45,13 +45,13 @@ app.get("/", (_,res) => {
   res.send("Hello World")
 })
 
-app.use("/products", productRouter);
-app.use("/categories", categoryRouter);
-app.use("/brands", brandRouter);
-app.use("/auth", authRouter);
-app.use("/user", userRouter);
-app.use("/cart", cartRouter);
-app.use("/orders", orderRouter);
+app.use("/api/products", productRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api/brands", brandRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/orders", orderRouter);
 
 // app.use(express.static(path.join(__dirname, "/client/build")));
 
