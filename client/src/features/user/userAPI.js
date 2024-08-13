@@ -1,5 +1,5 @@
 export const fetchLoggedInUserOrders = async (userId) => {
-  const response = await fetch("/user/orders/" + userId);
+  const response = await fetch("/api/user/orders/" + userId);
   const data = await response.json();
   console.log("Data", data);
   console.log("Total docs", data.length);
@@ -7,13 +7,13 @@ export const fetchLoggedInUserOrders = async (userId) => {
 };
 
 export const fetchLoggedInUser = async (userId) => {
-  const response = await fetch("/user/fetchuser/" + userId);
+  const response = await fetch("/api/user/fetchuser/" + userId);
   const data = await response.json();
   return data;
 };
 
 export const updateUser = async (update) => {
-  const response = await fetch("/user/updateUser/" + update.id, {
+  const response = await fetch("/api/user/updateUser/" + update.id, {
     method: "PATCH",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify(update),
@@ -26,7 +26,7 @@ export const updateUser = async (update) => {
 
 export const storeImageInDatabase = async ({downloadURL,userId}) => {
   try {
-    const response = await fetch(`/user/saveImage/${userId}`, {
+    const response = await fetch(`/api/user/saveImage/${userId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       
