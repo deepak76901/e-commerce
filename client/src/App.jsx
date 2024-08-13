@@ -103,11 +103,10 @@ function App() {
           <Route
             path="/product-detail/:id"
             element={
-              <Protected>
-                <Navbar />
+              <>
                 <ProductDetailsPage />
                 <Footer/>
-              </Protected>
+              </>
             }
           />
           <Route
