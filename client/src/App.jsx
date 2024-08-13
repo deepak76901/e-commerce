@@ -1,5 +1,4 @@
 // import { useState } from 'react'
-import "./App.css";
 import ProductDetailsPage from "../src/pages/ProductDetailsPage";
 import CartPage from "../src/pages/CartPage";
 import Checkout from "../src/pages/Checkout";
