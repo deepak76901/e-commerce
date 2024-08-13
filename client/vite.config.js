@@ -8,10 +8,10 @@ export default defineConfig({
    server: {
     proxy: {
       '/api': {
-        target: 'https://e-commerce-api-12.vercel.app/', // Replace with your backend API URL
+        target: 'https://e-commerce-api-12.vercel.app', // Replace with your backend API URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''), // Optional: rewrite the path
-        secure:true
+        secure:false
       },
     },
   },
