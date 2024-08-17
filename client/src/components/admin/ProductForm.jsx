@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createProductAsync,
   fetchProductByIdAsync,
+  resetCreatedProduct,
   resetProductForm,
   selectBrands,
   selectCategories,
@@ -14,6 +15,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchProductById } from "../../Redux/api/ProductAPI";
+import { Loader2 } from "lucide-react";
 
 export default function ProductForm() {
   const dispatch = useDispatch();
@@ -23,6 +25,7 @@ export default function ProductForm() {
   const navigate = useNavigate();
   const selectedProduct = useSelector(selectProductById);
   const createdProduct = useSelector(selectCreatedProduct);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -56,42 +59,57 @@ export default function ProductForm() {
   }, [selectedProduct]);
 
   const handleForm = (data) => {
-    console.log("Data : ", data);
-
-    const formData = new FormData();
+    setIsLoading(true);
+    const product = new FormData();
 
     // Append form data
-    // formData.append("title", data.title);
-    // formData.append("description", data.description);
-    // formData.append("price", data.price);
-    // formData.append("category", data.category);
-    // formData.append("brand", data.brand);
-    // formData.append("discountPercentage", data.discountPercentage);
-    // formData.append("stock", data.stock);
+    product.append("title", data.title);
+    product.append("description", data.description);
+    product.append("price", data.price);
+    product.append("category", data.category);
+    product.append("brand", data.brand);
+    product.append("discountPercentage", data.discountPercentage);
+    product.append("stock", data.stock);
 
     // Append image files
-    formData.append("thumbnail", data.thumbnail[0]);
-    // formData.append("image1", data.image1[0]);
-    // formData.append("image2", data.image2[0]);
-    // formData.append("image3", data.image3[0]);
+    product.append("thumbnail", data.thumbnail[0]);
+    product.append("image1", data.image1[0]);
+    product.append("image2", data.image2[0]);
+    product.append("image3", data.image3[0]);
 
+    // ## this approch is not beneficial for FormData type Data ##
     
+    // let product = {...data}
+    // product.price = +product.price;
+    // product.stock = +product.stock;
+    // product.discountPercentage = +product.discountPercentage;
+    // product.rating = +product.rating;
+    // product.thumbnail = product.thumbnail[0]
+    // product.image1 = product.image1[0]
+    // product.image2 = product.image2[0]
+    // product.image3 = product.image3[0]
+
+    // console.log("Data : ",product);
 
     if (params.id) {
-      dispatch(updateProductAsync({ id: params.id, product: formData }));
+      dispatch(updateProductAsync({ id: params.id, product }));
       dispatch(resetProductForm());
+      reset();
     } else {
-      dispatch(createProductAsync(formData));
+      dispatch(createProductAsync(product));
+      reset();
     }
-
-    console.log("Product Info : ", formData);
   };
 
-  // useEffect(() => {
-  //   if (createdProduct) {
-  //     navigate(`/product-detail/${createdProduct.id}`);
-  //   }
-  // }, [createdProduct]);
+  useEffect(() => {
+    if (createdProduct) {
+      setIsLoading(false);
+      navigate(`/product-detail/${createdProduct.id}`);
+      setTimeout(() => {
+        dispatch(resetCreatedProduct());
+      }, 3000);
+    }
+  }, [createdProduct]);
 
   return (
     <div className="mx-20 my-5 pb-8">
@@ -102,9 +120,8 @@ export default function ProductForm() {
         encType="multipart/form-data"
       >
         <div className="space-y-12">
-            {/*
           <div className="border-b border-gray-900/10 pb-12">
-            <h1 className="text-base font-semibold leading-7 text-gray-900">
+            <h1 className="text-lg font-semibold leading-7 text-gray-900">
               Add Product
             </h1>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -123,7 +140,7 @@ export default function ProductForm() {
                         required: "title is required",
                       })}
                       id="title"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -143,7 +160,7 @@ export default function ProductForm() {
                       required: "description is required",
                     })}
                     rows={3}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     defaultValue={""}
                   />
                 </div>
@@ -212,10 +229,10 @@ export default function ProductForm() {
                   {...register("price", {
                     required: "price is required",
                     min: 1,
-                    max: 100000,
+                    max: 1000000,
                   })}
                   id="price"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                  className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -237,7 +254,7 @@ export default function ProductForm() {
                     max: 99,
                   })}
                   id="discountPercentage"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                  className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -258,12 +275,11 @@ export default function ProductForm() {
                     min: 0,
                   })}
                   id="stock"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                  className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
           </div>{" "}
-          */}
           <div className="sm:col-span-6">
             <label
               htmlFor="thumbnail"
@@ -282,7 +298,6 @@ export default function ProductForm() {
               />
             </div>
           </div>
-         { /*
           <div className="sm:col-span-6">
             <label
               htmlFor="image1"
@@ -331,14 +346,13 @@ export default function ProductForm() {
               />
             </div>
           </div>
-          */}
         </div>
         <div>
           <button
             type="submit"
             className="flex w-full sm:w-56 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Submit
+            {isLoading ? <Loader2 className="animate-spin" /> : "Submit"}
           </button>
         </div>
       </form>

@@ -61,8 +61,8 @@ export const fetchCategoryAsync = createAsyncThunk(
 );
 export const createProductAsync = createAsyncThunk(
   "product/createProduct",
-  async (formData) => {
-    const response = await createProduct(formData);
+  async (product) => {
+    const response = await createProduct(product);
     return response;
   }
 );
@@ -93,6 +93,9 @@ export const productSlice = createSlice({
     },
     resetProductForm: (state) => {
       state.selectedProduct = null;
+    },
+    resetCreatedProduct: (state) => {
+      state.createdProduct = null;
     },
   },
 
@@ -162,7 +165,8 @@ export const productSlice = createSlice({
   },
 });
 
-export const { increment, resetProductForm } = productSlice.actions;
+export const { increment, resetProductForm, resetCreatedProduct } =
+  productSlice.actions;
 
 export const selectAllProducts = (state) => state.product.products;
 export const selectBrands = (state) => state.product.brands;

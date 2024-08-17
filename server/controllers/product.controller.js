@@ -2,36 +2,34 @@ import { Product } from "../models/Product.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const createProduct = async (req, res, next) => {
-  // const product = req.body;
-  // console.log(product);
-  // console.log("Product Details : ", title,description,discountPercentage);
+  let product = req.body;
+  console.log("New Product : ", product);
   try {
-    // const productCount = Product.countDocuments();
-    // product = {...product,id:productCount+1}
+    const productCount = await Product.countDocuments();
+    product = { ...product, id: productCount + 1 };
+
 
     // Handling IMages upload and getting url
-    const thumbnailLocalPath = req.file?.path;
-    // const image1LocalPath = req.files.image1[0].path;
-    // const image2LocalPath = req.files.image2[0].path;
-    // const image3LocalPath = req.files.image3[0].path;
+    const thumbnailLocalPath = req.files.thumbnail[0].path;
+    const image1LocalPath = req.files.image1[0].path;
+    const image2LocalPath = req.files.image2[0].path;
+    const image3LocalPath = req.files.image3[0].path;
+   
 
-    // const thumbnailUrl = await uploadOnCloudinary(thumbnailLocalPath);
-    // const image1Url = await uploadOnCloudinary(image1LocalPath);
-    // const image2Url = await uploadOnCloudinary(image2LocalPath);
-    // const image3Url = await uploadOnCloudinary(image3LocalPath);
+    const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
+    const image1 = await uploadOnCloudinary(image1LocalPath);
+    const image2 = await uploadOnCloudinary(image2LocalPath);
+    const image3 = await uploadOnCloudinary(image3LocalPath);
+    console.log("Image 1 url : ", image1.url);
 
-    // const newProduct = new Product({
-    //   title,
-    //   description,
-    //   discountPercentage,
-    //   thumbnail: thumbnailUrl.url,
-    //   image1: image1Url.url,
-    //   image2: image2Url.url,
-    //   image3: image3Url.url,
-    // });
-    // console.log("New Product : ", newProduct);
-    // const doc = await newProduct.save();
-    // res.status(201).json(doc);
+    const newProduct = new Product({
+      ...product,
+      thumbnail: thumbnail.url,
+      images: [image1.url, image2.url, image3.url],
+    });
+    console.log("New Product : ", newProduct);
+    const doc = await newProduct.save();
+    res.status(201).json(doc);
   } catch (error) {
     next(error);
   }

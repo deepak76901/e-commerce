@@ -14,13 +14,12 @@ export const fetchProductById = async (id) => {
   return data;
 };
 
-export const createProduct = async (formData) => {
+export const createProduct = async (product) => {
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/api/products/create`,
     {
       method: "POST",
-      body: formData,
-      
+      body:product,
     }
   );
   const data = await response.json();

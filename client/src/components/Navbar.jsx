@@ -28,6 +28,7 @@ function Navbar({ children }) {
   const user = useSelector(selectLoggedInUser);
   const { theme } = useSelector((state) => state.theme);
   const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
 
   return (
@@ -81,12 +82,14 @@ function Navbar({ children }) {
                   </div>
                 </div>
 
-                <TextInput
-                  icon={BsSearch}
-                  size="sm"
+                <input
                   type="text"
                   id="search"
-                  className="ml-5 w-80 mt-1 text-xl hidden md:block"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                  }}
+                  className="ml-5 pl-2 w-96 h-8 my-auto rounded-md text-sm hidden md:block"
                   placeholder="Search for Products,Brands and More"
                   color="blue"
                 />
