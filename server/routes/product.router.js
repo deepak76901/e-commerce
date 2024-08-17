@@ -6,12 +6,12 @@ import {
   fetchSuggestion,
   updateProduct,
 } from "../controllers/product.controller.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 export const router = Router();
 
-router
-  .get("/getAllProducts", fetchAllProducts)
-  .post("/create", createProduct)
-  .get("/:id", fetchProductById)
-  .patch("/update/:id", updateProduct)
-  .get("/suggestion/:category",fetchSuggestion)
+router.get("/getAllProducts", fetchAllProducts);
+router.post("/create", upload.single("thumbnail"), createProduct);
+router.get("/:id", fetchProductById);
+router.patch("/update/:id", updateProduct);
+router.get("/suggestion/:category", fetchSuggestion);

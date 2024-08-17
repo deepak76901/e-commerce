@@ -1,6 +1,5 @@
 import React from "react";
-import Cart from "../features/cart/Cart";
-import Navbar from "../features/Navbar/Navbar";
+import Cart from "../components/Cart";
 
 function CartPage() {
   return (

@@ -1,9 +1,9 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetCartAsync } from "../features/cart/CartSlice";
-import { selectLoggedInUser } from "../features/auth/authSlice";
-import { resetOrder } from "../features/order/OrderSlice";
+import { resetCartAsync } from "../Redux/slices/CartSlice";
+import { selectLoggedInUser } from "../Redux/slices/authSlice";
+import { resetOrder } from "../Redux/slices/OrderSlice";
 
 export default function OrderSuccessPage() {
   const params = useParams();

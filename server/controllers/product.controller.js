@@ -1,14 +1,37 @@
 import { Product } from "../models/Product.model.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const createProduct = async (req, res, next) => {
-  let product = req.body;
+  // const product = req.body;
+  // console.log(product);
+  // console.log("Product Details : ", title,description,discountPercentage);
   try {
-    const productCount = Product.countDocuments();
+    // const productCount = Product.countDocuments();
     // product = {...product,id:productCount+1}
-    const newProduct = new Product(product);
 
-    const doc = await newProduct.save();
-    res.status(201).json(doc);
+    // Handling IMages upload and getting url
+    const thumbnailLocalPath = req.file?.path;
+    // const image1LocalPath = req.files.image1[0].path;
+    // const image2LocalPath = req.files.image2[0].path;
+    // const image3LocalPath = req.files.image3[0].path;
+
+    // const thumbnailUrl = await uploadOnCloudinary(thumbnailLocalPath);
+    // const image1Url = await uploadOnCloudinary(image1LocalPath);
+    // const image2Url = await uploadOnCloudinary(image2LocalPath);
+    // const image3Url = await uploadOnCloudinary(image3LocalPath);
+
+    // const newProduct = new Product({
+    //   title,
+    //   description,
+    //   discountPercentage,
+    //   thumbnail: thumbnailUrl.url,
+    //   image1: image1Url.url,
+    //   image2: image2Url.url,
+    //   image3: image3Url.url,
+    // });
+    // console.log("New Product : ", newProduct);
+    // const doc = await newProduct.save();
+    // res.status(201).json(doc);
   } catch (error) {
     next(error);
   }
@@ -99,10 +122,10 @@ export const updateProduct = async (req, res, next) => {
 
 export const fetchSuggestion = async (req, res, next) => {
   try {
-    const {category} = req.params;
-    const data = await Product.find({category}).limit(5)
-    res.status(200).json(data)
+    const { category } = req.params;
+    const data = await Product.find({ category }).limit(5);
+    res.status(200).json(data);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};

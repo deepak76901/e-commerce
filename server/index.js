@@ -18,20 +18,21 @@ dotenv.config({
 
 const app = express();
 const __dirname = path.resolve();
-console.log(__dirname);
 
 // Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(
-  cors({
-    origin: [
-      "https://e-commerce-client-12.vercel.app",
-      "http://localhost:5137",
-    ],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    credentials: true,
-    exposedHeaders: ["X-Total-Count"],
-  })
+  cors()
+  //   {
+  //   origin: [
+  //     "https://e-commerce-client-12.vercel.app",
+  //     "http://localhost:5137",
+  //   ],
+  //   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  //   credentials: true,
+  //   exposedHeaders: ["X-Total-Count"],
+  // }
 );
 
 // http Requests Logs

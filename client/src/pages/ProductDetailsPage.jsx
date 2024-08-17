@@ -1,6 +1,5 @@
 import React from "react";
-import ProductDetails from "../features/Product/components/ProductDetails";
-import Navbar from "../features/Navbar/Navbar";
+import ProductDetails from "../components/products/ProductDetails";
 
 function ProductDetailsPage() {
   return (

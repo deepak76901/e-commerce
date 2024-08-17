@@ -1,6 +1,5 @@
 import React from 'react'
-import UserOrders from '../features/user/UserOrders'
-import Navbar from '../features/Navbar/Navbar'
+import UserOrders from '../components/UserOrders'
 
 export default function UserOrderPage() {
   return (

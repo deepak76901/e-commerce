@@ -5,14 +5,17 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
    // ... other configurations
+   
    server: {
     proxy: {
       '/api': {
-        target: 'https://e-commerce-api-12.vercel.app',
+        target: 'http://localhost:8000',
         changeOrigin: true,
       
         secure:false
       },
     },
   },
+
+  
 })

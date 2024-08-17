@@ -6,18 +6,16 @@ import {
   deleteItemFromCartAsync,
   selectItems,
   updateCartAsync,
-} from "../features/cart/CartSlice";
+} from "../Redux/slices/CartSlice";
 import { useForm } from "react-hook-form";
-import {
-  fetchLoggedInUserOrdersAsync,
-  selectUserOrders,
-  updateUserAsync,
-} from "../features/user/userSlice";
+
 import {
   createOrderAsync,
   selectCurrentOrder,
-} from "../features/order/OrderSlice";
-import { selectUserInfo } from "../features/user/userSlice";
+} from "../Redux/slices/OrderSlice";
+import { selectUserInfo, fetchLoggedInUserOrdersAsync,
+  selectUserOrders,
+  updateUserAsync, } from "../Redux/slices/userSlice";
 import { discountedPrice } from "../app/constants";
 
 function Checkout() {

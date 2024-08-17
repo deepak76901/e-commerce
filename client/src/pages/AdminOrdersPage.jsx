@@ -1,5 +1,4 @@
-import Navbar from "../features/Navbar/Navbar"
-import AdminOrders from "../features/admin/components/AdminOrders";
+import AdminOrders from "../components/admin/AdminOrders";
 function AdminOrdersPage() {
     return ( 
         <>
