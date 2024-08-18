@@ -30,7 +30,7 @@ export default function AdminProductDetails() {
   }, [dispatch, params.id]);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white min-h-screen">
       {product && (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">

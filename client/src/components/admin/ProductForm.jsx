@@ -112,7 +112,7 @@ export default function ProductForm() {
   }, [createdProduct]);
 
   return (
-    <div className="mx-20 my-5 pb-8">
+    <div className="mx-20 my-5 pb-8 min-h-screen">
       <form
         noValidate
         className="space-y-6"

@@ -42,8 +42,8 @@ export default function ProductList() {
   const products = useSelector(selectAllProducts);
   const brands = useSelector(selectBrands);
   const categories = useSelector(selectCategories);
-
   const totalItems = useSelector(selectTotalItems);
+
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
@@ -55,11 +55,11 @@ export default function ProductList() {
       name: "Category",
       options: categories,
     },
-    {
-      id: "brand",
-      name: "Brand",
-      options: brands,
-    },
+    // {
+    //   id: "brand",
+    //   name: "Brand",
+    //   options: brands,
+    // },
   ];
 
   const handleFilter = (e, section, option) => {
@@ -77,8 +77,6 @@ export default function ProductList() {
       );
       newFilter[section.id].splice(index, 1);
     }
-    console.log({ newFilter });
-
     setFilter(newFilter);
   };
 
@@ -102,7 +100,7 @@ export default function ProductList() {
   }, [totalItems, sort]);
 
   useEffect(() => {
-    dispatch(fetchBrandsAsync());
+    // dispatch(fetchBrandsAsync());
     dispatch(fetchCategoryAsync());
   }, []);
 
@@ -528,6 +526,7 @@ function ProductGrid({ products, theme }) {
                     <img
                       src={product.thumbnail}
                       alt={product.imageAlt}
+                      loading="lazy"
                       className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                     />
                   </div>

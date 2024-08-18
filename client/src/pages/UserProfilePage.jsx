@@ -4,7 +4,7 @@ import Profile from '../components/Profile'
 export default function UserProfilePage() {
   return (
     <div>
-      {/* <Profile/> */}
+      <Profile/>
     </div>
   )
 }

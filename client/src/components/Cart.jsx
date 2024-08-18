@@ -31,7 +31,7 @@ function Cart() {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 min-h-screen">
         <div className="mt-8 p-4 bg-white ">
           <h2 className="text-3xl pt-3 pb-5 pl-7 font-semibold bg-white">
             Cart Items

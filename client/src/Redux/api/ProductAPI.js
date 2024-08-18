@@ -43,18 +43,18 @@ export const fetchProductsByFilter = async (filter, sort, pagination) => {
   // filter = {"category" : {"smartphone","laptop"}}
   // sort = {_sort:"price",_order:"desc"}
   // pagination = {_page=1,_limit=10}
-
+  
   // TODO : on server we will support multi values
   let queryString = "";
   for (let key in filter) {
     const categoryValues = filter[key];
-
+    
     if (categoryValues.length > 0) {
-      const lastCategoryValue = categoryValues[categoryValues.length - 1];
+      const lastCategoryValue = categoryValues.map( category => category);
       queryString += `${key}=${lastCategoryValue}&`;
     }
   }
-
+  
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
   }
@@ -62,6 +62,7 @@ export const fetchProductsByFilter = async (filter, sort, pagination) => {
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
+
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/api/products/getAllProducts?` +
       queryString

@@ -43,8 +43,6 @@ export const fetchAllProducts = async (req, res, next) => {
   let query = Product.find({});
   let totalProductsQuery = Product.find({});
 
-  console.log(req.query.category);
-
   if (req.query.category) {
     query = query.find({ category: { $in: req.query.category.split(",") } });
     totalProductsQuery = totalProductsQuery.find({
@@ -127,3 +125,4 @@ export const fetchSuggestion = async (req, res, next) => {
     next(error);
   }
 };
+

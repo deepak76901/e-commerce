@@ -16,7 +16,7 @@ function UserOrders() {
     dispatch(fetchLoggedInUserOrdersAsync(user.id));
   }, [dispatch]);
   return (
-    <>
+    <div className="min-h-screen">
       {orders.length === 0 && (
         <div className="mt-28 flex flex-col justify-center items-center gap-4 ">
           <h1 className=" text-4xl font-semibold ">
@@ -27,7 +27,7 @@ function UserOrders() {
       )}
       {orders.map((order, index) => (
         <div
-          className="mx-auto  py-4 max-w-5xl px-2 sm:px-6 lg:px-8 "
+          className="mx-auto py-4 max-w-5xl px-2 sm:px-6 lg:px-8 "
           key={index}
         >
           <div className="p-4 bg-gray-300 rounded-xl">
@@ -90,7 +90,7 @@ function UserOrders() {
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 

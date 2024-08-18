@@ -55,11 +55,11 @@ export default function AdminProductList() {
       name: "Category",
       options: categories,
     },
-    {
-      id: "brand",
-      name: "Brand",
-      options: brands,
-    },
+    // {
+    //   id: "brand",
+    //   name: "Brand",
+    //   options: brands,
+    // },
   ];
 
   const handleFilter = (e, section, option) => {
@@ -77,7 +77,6 @@ export default function AdminProductList() {
       );
       newFilter[section.id].splice(index, 1);
     }
-    console.log({ newFilter });
 
     setFilter(newFilter);
   };

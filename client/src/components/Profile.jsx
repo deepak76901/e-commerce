@@ -3,13 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveImageAsync, selectUserInfo, updateUserAsync } from "../Redux/slices/userSlice";
 import { useForm } from "react-hook-form";
 import { Button, FileInput } from "flowbite-react";
-// import app from "../../firebase.config";
-// import {
-//   getDownloadURL,
-//   getStorage,
-//   ref,
-//   uploadBytesResumable,
-// } from "firebase/storage";
+
 
 function Profile() {
   const dispatch = useDispatch();
@@ -59,53 +53,14 @@ function Profile() {
   };
 
   const handleUploadImage = async () => {
-    try {
-      if (!avatar) {
-        setImageUploadError("Please select an image");
-        return;
-      }
-      setImageUploadError(null);
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + "-" + avatar.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, avatar);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // const progress =
-          //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          // setImageUploadProgress(progress.toFixed(0));
-        },
-        (error) => {
-          setImageUploadProgress(null);
-          setImageUploadError(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setImageUploadProgress(null);
-            setImageUploadError(null);
-            setImageUrl(downloadURL);
-            setChangeAvatar(false)
-          });
-        }
-      );
-    } catch (error) {
-      setImageUploadError("Image upload failed");
-      setImageUploadProgress(null);
-      console.log(error);
-    }
+    
   };
 
-  useEffect(() => {
-    if (imageUrl.length > 0) {
-      console.log("Image url", imageUrl);
-      dispatch(saveImageAsync({ downloadURL: imageUrl, userId: user.id }));
-    }
-  }, [imageUrl]);
+ 
 
   return (
-    <div className="flex justify-center">
-      <div className="mt-8 p-4 bg-gray-300 md:max-w-5xl w-full rounded-xl">
+    <div className="flex justify-center min-h-screen">
+      <div className="my-8 p-4 bg-gray-300 md:max-w-5xl w-full rounded-xl">
         <div className="flex flex-col sm:flex-row sm:justify-between">
           <div className="">
             <h2 className="text-3xl pt-3 pb-3 font-semibold bg-gray-300 pl-3">
