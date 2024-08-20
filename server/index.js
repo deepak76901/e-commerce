@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/index.js";
 import morgan from "morgan";
 import path from "path";
+import cookieParser from "cookie-parser"
 
 dotenv.config({
   path: "./.env",
@@ -15,6 +16,9 @@ const __dirname = path.resolve();
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
+app.use(morgan("dev"));
+
 app.use(
   cors()
   //   {
@@ -28,8 +32,6 @@ app.use(
   // }
 );
 
-// http Requests Logs
-app.use(morgan("dev"));
 
 connectDB();
 

@@ -1,13 +1,13 @@
 // import { useState } from 'react'
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // # Components
 import Protected from "./components/auth/Protected";
 import { fetchItemsByUserIdAsync } from "./Redux/slices/CartSlice";
-import { selectLoggedInUser } from "./Redux/slices/authSlice";
+import { selectLoggedInUser,auto_Login_Async } from "./Redux/slices/authSlice";
 import LogOut from "./components/auth/Logout";
 import ProtectedAdmin from "./components/auth/ProtectedAdmin";
 import { fetchLoggedInUserAsync } from "./Redux/slices/userSlice";
@@ -35,6 +35,13 @@ import Home from "./pages/Home";
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
+  // const [userInfo, setUserInfo] = useState();
+
+  useEffect(() => {
+    console.log("Dispatching start");
+
+      dispatch(auto_Login_Async())
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -42,9 +49,6 @@ function App() {
       dispatch(fetchLoggedInUserAsync(user._id));
     }
   }, [user]);
-
-  if (localStorage.getItem("token")) {
-  }
 
   return (
     <>

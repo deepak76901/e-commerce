@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { checkUser, createUser, logOut } from "../api/authAPI";
+import { checkUser, createUser, logOut, auto_Login } from "../api/authAPI";
 import { updateUser } from "../api/userAPI";
 
 const initialState = {
@@ -26,6 +26,20 @@ export const checkUserAsync = createAsyncThunk(
     } catch (error) {
       console.log(error);
       return rejectWithValue(error);
+    }
+  }
+);
+
+export const auto_Login_Async = createAsyncThunk(
+  "user/autoLogin",
+  async () => {
+    try {
+      console.log("Slice triggered");
+      const response = await auto_Login();
+      return response;
+    } catch (error) {
+      console.log(error);
+      // return rejectWithValue(error);
     }
   }
 );
@@ -70,6 +84,17 @@ export const authSlice = createSlice({
         state.loggedInUser = action.payload.rest;
       })
       .addCase(checkUserAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.error = action.payload;
+      })
+      .addCase(auto_Login_Async.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(auto_Login_Async.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.loggedInUser = action.payload.rest;
+      })
+      .addCase(auto_Login_Async.rejected, (state, action) => {
         state.status = "idle";
         state.error = action.payload;
       })

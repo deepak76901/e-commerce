@@ -53,8 +53,8 @@ export const logInUser = async (req, res, next) => {
 
     res
       .status(200)
-      .cookie("access_token", token, { httpOnly: true })
-      .json({rest,token});
+      .cookie("access_token", token, { httpOnly: true, secure: true })
+      .json({ rest, token });
   } catch (error) {
     next(error);
   }

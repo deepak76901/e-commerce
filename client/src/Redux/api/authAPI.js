@@ -42,6 +42,20 @@ export const checkUser = async (logInInfo) => {
   }
 };
 
+export const auto_Login = async () => {
+  try {
+    const response = await fetch("/api/auth/auto-login", {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await response.json()
+    return data;
+  } catch (error) {
+    console.log("Auto login failed:", error.response.message);
+    return null;
+  }
+};
+
 export const logOut = async (userId) => {
   return { data: "success" };
 };
