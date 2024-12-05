@@ -44,6 +44,10 @@ app.get("/", (_, res) => {
   res.send("Hello World");
 });
 
+app.get("/video", (_, res) => {
+  res.download("./public/ramLila.mp4")
+});
+
 
 // # Routes Import
 
