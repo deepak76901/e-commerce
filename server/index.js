@@ -5,7 +5,7 @@ import connectDB from "./db/index.js";
 import morgan from "morgan";
 import path from "path";
 import cookieParser from "cookie-parser"
-
+import process from "node:process"
 dotenv.config({
   path: "./.env",
 });
@@ -45,7 +45,7 @@ app.get("/", (_, res) => {
 });
 
 app.get("/video", (_, res) => {
-  res.download("./public/ramLila.mp4")
+  res.download(process.cwd + "./public/ramLila.mp4")
 });
 
 
