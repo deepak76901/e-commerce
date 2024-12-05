@@ -45,7 +45,7 @@ app.get("/", (_, res) => {
 });
 
 app.get("/video", (_, res) => {
-  res.download(process.cwd() + "\\public\\ramLila.mp4")
+  res.download(path.join(__dirname,"public","ramLila.mp4"))
 });
 
 
