@@ -7,14 +7,14 @@ export default defineConfig({
    // ... other configurations
    
    server: {
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://localhost:8000',
-    //     changeOrigin: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
       
-    //     secure:false
-    //   },
-    // },
+        secure:false
+      },
+    },
   },
 
   
