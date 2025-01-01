@@ -44,11 +44,14 @@ export const checkUser = async (logInInfo) => {
 
 export const auto_Login = async () => {
   try {
-    const response = await fetch("/api/auth/auto-login", {
-      method: "GET",
-      credentials: "include",
-    });
-    const data = await response.json()
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/auth/auto-login`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
     return data;
   } catch (error) {
     console.log("Auto login failed:", error.response.message);

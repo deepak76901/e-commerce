@@ -20,7 +20,7 @@ app.use(cookieParser())
 app.use(morgan("dev"));
 
 app.use(
-  cors()
+  cors(
   //   {
   //   origin: [
   //     "https://e-commerce-client-12.vercel.app",
@@ -30,6 +30,7 @@ app.use(
   //   credentials: true,
   //   exposedHeaders: ["X-Total-Count"],
   // }
+  )
 );
 
 
@@ -44,9 +45,9 @@ app.get("/", (_, res) => {
   res.send("Hello World");
 });
 
-app.get("/video", (_, res) => {
-  res.download(path.join(__dirname,"public","ramLila.mp4"))
-});
+// app.get("/video", (_, res) => {
+//   res.download(path.join(__dirname,"public","ramLila.mp4"))
+// });
 
 
 // # Routes Import
