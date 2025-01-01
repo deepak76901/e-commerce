@@ -46,6 +46,14 @@ app.get("/", (_, res) => {
 //   res.download(path.join(__dirname,"public","ramLila.mp4"))
 // });
 
+app.use((req, res, next) => {
+  if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+    return res.redirect(`https://${req.get('host')}${req.url}`);
+  }
+  next();
+});
+
+
 // # Routes Import
 
 import { router as productRouter } from "./routes/product.router.js";
