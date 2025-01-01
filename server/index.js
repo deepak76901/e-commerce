@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 import connectDB from "./db/index.js";
 import morgan from "morgan";
 import path from "path";
-import cookieParser from "cookie-parser"
-import process from "node:process"
+import cookieParser from "cookie-parser";
+import process from "node:process";
 dotenv.config({
   path: "./.env",
 });
@@ -16,23 +16,20 @@ const __dirname = path.resolve();
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.use(
-  cors(
-  //   {
-  //   origin: [
-  //     "https://e-commerce-client-12.vercel.app",
-  //     "http://localhost:5137",
-  //   ],
-  //   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  //   credentials: true,
-  //   exposedHeaders: ["X-Total-Count"],
-  // }
-  )
+  cors({
+    origin: [
+      "https://e-commerce-client-12.vercel.app",
+      "http://localhost:5137",
+    ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    credentials: true,
+    exposedHeaders: ["X-Total-Count"],
+  })
 );
-
 
 connectDB();
 
@@ -48,7 +45,6 @@ app.get("/", (_, res) => {
 // app.get("/video", (_, res) => {
 //   res.download(path.join(__dirname,"public","ramLila.mp4"))
 // });
-
 
 // # Routes Import
 
