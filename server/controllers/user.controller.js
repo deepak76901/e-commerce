@@ -77,3 +77,7 @@ export const saveImage = async (req, res, next) => {
   next(error)
  }
 };
+
+export const greet = (_req, res) => {
+  return res.send("Hii John Doe");
+}

@@ -38,14 +38,6 @@ app.listen(
   console.log("Server is listening on PORT : " + process.env.PORT)
 );
 
-app.get("/", (_, res) => {
-  res.send("Hello World");
-});
-
-// app.get("/video", (_, res) => {
-//   res.download(path.join(__dirname,"public","ramLila.mp4"))
-// });
-
 app.use((req, res, next) => {
   if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
     return res.redirect(`https://${req.get('host')}${req.url}`);

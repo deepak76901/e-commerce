@@ -5,6 +5,7 @@ import {
   fetchUserOrders,
   saveImage,
   updateUser,
+  greet
 } from "../controllers/user.controller.js";
 
 export const router = Router();
@@ -15,3 +16,4 @@ router
   .post("/createOrder/:userId", createOrder)
   .get("/orders/:userId",fetchUserOrders)
   .put("/saveImage/:userId",saveImage)
+  .get("/greet",greet)
