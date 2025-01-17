@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProductByIdAsync,
@@ -12,7 +11,7 @@ import { addToCartAsync, selectItems } from "../../Redux/slices/CartSlice";
 import { selectLoggedInUser } from "../../Redux/slices/authSlice";
 import { selectUserInfo } from "../../Redux/slices/userSlice";
 import Suggestions from "../products/Suggestions";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { MoveLeft, MoveRight } from "lucide-react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -69,7 +68,7 @@ export default function ProductDetails() {
                     index > 0 && setIndex(index - 1);
                   }}
                 >
-                  <FaAngleLeft />
+                  <MoveLeft />
                 </button>
                 <button
                   className="absolute top-2/4 right-0 bg-gray-200/70 py-1 px-1 text-xl"
@@ -77,7 +76,7 @@ export default function ProductDetails() {
                     index < 3 && setIndex(index + 1);
                   }}
                 >
-                  <FaAngleRight />
+                  <MoveRight />
                 </button>
                 <img
                   src={product.images[index]}

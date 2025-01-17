@@ -11,7 +11,7 @@ import { selectItems } from "../Redux/slices/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedInUser } from "../Redux/slices/authSlice";
 import { TextInput } from "flowbite-react";
-import { BsSearch } from "react-icons/bs";
+import { Search } from "lucide-react";
 
 const navigation = [
   { name: "Products", link: "/", isAdmin: false },
@@ -120,7 +120,7 @@ function Navbar({ children }) {
                   {showSearch === true ? (
                     <XMarkIcon className="text-xl md:hidden h-7 w-7 text-gray-600" />
                   ) : (
-                    <BsSearch className="md:hidden text-xl text-center h-5 w-5 text-gray-600 font-medium mx-1" />
+                    <Search className="md:hidden text-xl text-center h-5 w-5 text-gray-600 font-medium mx-1" />
                   )}
                 </button>
                 <Link to="/cart">

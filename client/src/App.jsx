@@ -40,7 +40,7 @@ function App() {
   useEffect(() => {
     console.log("Dispatching start");
 
-      dispatch(auto_Login_Async())
+      // dispatch(auto_Login_Async())
   }, []);
 
   useEffect(() => {

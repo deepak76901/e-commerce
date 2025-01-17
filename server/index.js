@@ -21,7 +21,10 @@ app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: ["https://e-commerce-client-12.vercel.app"],
+    origin: [
+      "https://e-commerce-client-12.vercel.app",
+      "http://localhost:5137",
+    ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
     exposedHeaders: ["X-Total-Count"],
@@ -35,12 +38,12 @@ app.listen(
   console.log("Server is listening on PORT : " + process.env.PORT)
 );
 
-app.use((req, res, next) => {
-  if (!req.secure && req.get("x-forwarded-proto") !== "https") {
-    return res.redirect(`https://${req.get("host")}${req.url}`);
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   if (!req.secure && req.get("x-forwarded-proto") !== "https") {
+//     return res.redirect(`https://${req.get("host")}${req.url}`);
+//   }
+//   next();
+// });
 
 // # Routes Import
 
