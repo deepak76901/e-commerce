@@ -53,12 +53,12 @@ export const logInUser = async (req, res, next) => {
 
     res
       .status(200)
-      .cookie("access_token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-      })
       .json({ rest, token });
+      // .cookie("access_token", token, {
+      //   httpOnly: true,
+      //   secure: true,
+      //   sameSite: "strict",
+      // })
   } catch (error) {
     next(error);
   }
