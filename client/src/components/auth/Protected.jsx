@@ -2,12 +2,13 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import { selectLoggedInUser } from "../../Redux/slices/authSlice";
 import { useSelector } from "react-redux";
+import { useUser } from "@clerk/clerk-react";
 
 function Protected({ children }) {
-  const user = useSelector(selectLoggedInUser);
+  const {isLoaded, isSignedIn, user} = useUser();
 
   if (!user) {
-    return <Navigate to="/login" replace={true}></Navigate>;
+    return <Navigate to="/sign-in" replace={true}></Navigate>;
   }
   return children;
 }
